@@ -212,11 +212,24 @@ public class AppContext implements Serializable {
     }
 
 
-
-
-/*
-    public boolean manualAtribution() {
-        return state.manualAtribution();
+    public boolean setNumberStudent(long newNumber, long number) {
+        return app.editNumberStudent(newNumber, number);
     }
-    */
+
+    public boolean setApplicableInternshipStudent(long number) {
+        return app.editApplicableInternshipStudent(number);
+    }
+
+    public boolean setCourseStudent(String newCourse, long number) {
+        return app.editCourseStudent(newCourse, number);
+    }
+
+    public boolean setBranchStudent(String newBranch, long number) {
+        return app.editBranchStudent(newBranch, number);
+    }
+
+    public boolean setScoreStudent(String newScore, long number) {
+        return app.editScoreStudent(newScore, number);
+    }
+
 }

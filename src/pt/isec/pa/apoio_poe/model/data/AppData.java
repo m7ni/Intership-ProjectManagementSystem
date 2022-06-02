@@ -22,6 +22,7 @@ public class AppData implements Serializable {
     protected List<FinalAtribution> FA;
     protected Proposals tieProposal;
     protected List<Student> studentsTie;
+    
     public AppData() {
         initialize();
     }
@@ -368,8 +369,6 @@ public class AppData implements Serializable {
         return true;
     }
 
-
-
     public boolean addProject(String idCode, long number, List<Branches> branch, String title, String tEmail) {      //T2
         Project aux;
         if (!students.containsKey(number) && number != -1)
@@ -618,7 +617,6 @@ public class AppData implements Serializable {
         block.set(phase - 1, StateBlock.BLOCKED);
     }
 
-
     public Proposals getTieProposal() {
         return tieProposal;
     }
@@ -722,12 +720,14 @@ public class AppData implements Serializable {
 
        return values;
     }
+   
     private void StudentsWOProposal(List<Student> studentsWoProposal) {
         for(Student s : students.values())
             if(!s.isAssignedProposal() && candidatures.containsKey(s.getStudentNumber())){ //doesn't have a proposal, and presented a candidature
                 studentsWoProposal.add(s);
             }
     }
+    
     private void projectNoStudent(List<Project> prop) {
         for(Project p : projects.values())
             if(!p.getHasAssignedStudent()){ //doesn't have a proposal, and presented a candidature
@@ -742,7 +742,7 @@ public class AppData implements Serializable {
             }
     }
 
-  public List<Student> noProposalCandidature() {
+    public List<Student> noProposalCandidature() {
         List<Student> aux = new ArrayList<>();
        for(Student s: students.values()){
            if(!s.isAssignedProposal() && candidatures.containsKey(s.getStudentNumber()))

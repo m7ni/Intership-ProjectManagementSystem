@@ -81,4 +81,8 @@ public abstract class Proposals implements Serializable {
     }
 
     public abstract List<Branches> getBranch();
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

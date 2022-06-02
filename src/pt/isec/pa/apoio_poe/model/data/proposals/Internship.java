@@ -18,6 +18,14 @@ public class Internship extends Proposals {
         this.local = local;
     }
 
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    public void setBranch(List<Branches> branch) {
+        this.branch = branch;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

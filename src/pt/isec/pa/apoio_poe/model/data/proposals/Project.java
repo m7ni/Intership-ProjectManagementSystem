@@ -13,6 +13,14 @@ public class Project extends Proposals {
         this.tEmail = tEmail;
     }
 
+    public void setBranch(List<Branches> branch) {
+        this.branch = branch;
+    }
+
+    public void settEmail(String tEmail) {
+        this.tEmail = tEmail;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
