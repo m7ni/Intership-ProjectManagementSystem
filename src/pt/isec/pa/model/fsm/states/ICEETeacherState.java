@@ -6,7 +6,9 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 
-public class ICEETeacherState extends AppStateAdapter {
+import java.io.Serializable;
+
+public class ICEETeacherState extends AppStateAdapter implements Serializable {
 
     public ICEETeacherState(AppContext context, AppData data) {
         super(context, data);

@@ -8,9 +8,10 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PhaseThreeState extends AppStateAdapter {
+public class PhaseThreeState extends AppStateAdapter implements Serializable {
 
     public PhaseThreeState(AppContext context, AppData data) {
         super(context,data);

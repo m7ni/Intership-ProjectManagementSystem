@@ -6,7 +6,9 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 
-public class ChoosePhaseOne extends AppStateAdapter {
+import java.io.Serializable;
+
+public class ChoosePhaseOne extends AppStateAdapter implements Serializable {
 
     public ChoosePhaseOne(AppContext context, AppData data) {
         super(context, data);

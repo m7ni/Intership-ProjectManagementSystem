@@ -1,6 +1,8 @@
 package pt.isec.pa.model.data;
 
-public enum Filtros {
+import java.io.Serializable;
+
+public enum Filtros  implements Serializable {
     SELFPROP,
     TEACHERPROP,
     CANDIDATUREPROP,

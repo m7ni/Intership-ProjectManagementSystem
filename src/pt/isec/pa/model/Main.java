@@ -6,7 +6,8 @@ import pt.isec.pa.ui.text.UIText;
 public class Main {
     public static void main(String[] args) {
         AppContext fsm = new AppContext();
-        UIText ui = new UIText(fsm);
+        Facade fc = new Facade(fsm);
+        UIText ui = new UIText(fc);
         ui.start();
     }
 }

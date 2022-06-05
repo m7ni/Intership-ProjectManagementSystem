@@ -1,13 +1,15 @@
 package pt.isec.pa.model.fsm;
 
+import pt.isec.pa.model.data.memento.IMemento;
+import pt.isec.pa.model.data.memento.IOriginator;
+import pt.isec.pa.model.data.memento.Memento;
 import pt.isec.pa.model.data.personel.Student;
 import pt.isec.pa.model.data.personel.Teacher;
-import pt.isec.pa.apoio_poe.model.data.proposals.*;
+import pt.isec.pa.model.data.proposals.*;
 import pt.isec.pa.model.fsm.states.ChoosePhaseOne;
 import pt.isec.pa.model.data.AppData;
 import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.data.StateBlock;
-import pt.isec.pa.model.data.proposals.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -16,13 +18,13 @@ import java.util.List;
 public class AppContext implements Serializable {
     static final long serialVersionUID = 100L;
     private AppData app;
-    transient private IAppState state;
-   // private MemoryManager mm;
+    private IAppState state;
+
     public AppContext() {
         this.app = new AppData();
         this.state = new ChoosePhaseOne(this,app);
-        //this.mm = new MemoryManager();
     }
+
 
     public void changeState(IAppState newState) {
         state = newState;
@@ -39,13 +41,14 @@ public class AppContext implements Serializable {
     public void teacher(){
         state.teacher();
     }
+
     public void student(){
         state.student();
     }
+
     public void projectInternship(){
         state.PI();
     }
-
 
     public AppState getState() {
         if (state == null)
@@ -59,6 +62,7 @@ public class AppContext implements Serializable {
     public boolean insertTeacher(String name, String email) {
         return state.insert( name, email);
     }
+
     public boolean insertPI(String idCode, long number, List<String> branch, String title, String local) {
         return state.insert(idCode, number, branch, title, local);
     }
@@ -70,6 +74,7 @@ public class AppContext implements Serializable {
     public boolean remove(Long number) {
       return state.erase(number);
     }
+
     public boolean remove(String email) {
         return state.erase(email);
     }
@@ -91,7 +96,7 @@ public class AppContext implements Serializable {
         return state.set(name,email);
     }
     */
-    public boolean save(String filename){
+  /*  public boolean save(String filename){
         try(ObjectOutputStream oos =
                     new ObjectOutputStream(
                             new FileOutputStream(filename)))
@@ -101,8 +106,8 @@ public class AppContext implements Serializable {
             System.err.println("Error saving data");
         }
         return false;
-    }
-
+    }*/
+/*
     public boolean load(String filename){
         try(ObjectInputStream ois =
                     new ObjectInputStream(
@@ -117,8 +122,9 @@ public class AppContext implements Serializable {
 
         return false;
     }
-    public StateBlock getBlock(int phase){return app.getBlock(phase);}
 
+ */
+    public StateBlock getBlock(int phase){return app.getBlock(phase);}
 
     public List<Proposals> printFiltros(List<Filtros> filtros){
         return state.printFiltro(filtros);
@@ -250,6 +256,18 @@ public class AppContext implements Serializable {
 
     public boolean setScoreStudent(String newScore, long number) {
         return app.editScoreStudent(newScore, number);
+    }
+
+    public boolean setCandidatures(String values, String number) {
+        return app.editCandidatures(values, number);
+    }
+
+    public boolean setMentor(String newMentor, long number) {
+        return app.editMentor(newMentor, number);
+    }
+
+    public FinalAtribution getStudentFA(long number) {
+        return app.getStudentFA(number);
     }
 
 }

@@ -5,9 +5,8 @@ import pt.isec.pa.model.data.Branches;
 import pt.isec.pa.model.data.Minor;
 import pt.isec.pa.model.data.personel.Student;
 import pt.isec.pa.model.data.personel.Teacher;
-import pt.isec.pa.apoio_poe.model.data.proposals.*;
 import pt.isec.pa.model.data.StateBlock;
-import pt.isec.pa.model.fsm.AppContext;
+import pt.isec.pa.model.Facade;
 import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.utils.PAInput;
@@ -19,21 +18,12 @@ import pt.isec.pa.model.data.proposals.SelfProposed;
 import java.util.*;
 
 public class UIText {
-    AppContext fsm;
+    Facade facade;
 
-    public UIText(AppContext fsm) {
-        this.fsm = fsm;
+    public UIText(Facade fsm) {
+        this.facade = fsm;
     }
     private boolean finish = false;
-
-
-    protected void beginUI(){
-        switch (PAInput.chooseOption("Hello","Enter APP","Exit APP")) {
-            case 1-> fsm.enterAPP();
-            case 2-> exit();
-        }
-    }
-
 
     private boolean blockUI(){
         boolean aux;
@@ -48,7 +38,7 @@ public class UIText {
 
     public void start() {
         while (!finish) {
-            switch (fsm.getState()) {
+            switch (facade.getState()) {
                 case CHOOSE_PHASE_ONE -> ChoosePhaseOneUI();
                 case PONE_STUDENT -> ICEEStateUIStudent();
                 case PONE_TEACHER -> ICEEStateUITeacher();
@@ -68,41 +58,41 @@ public class UIText {
     private void PhaseFiveStateUI() {
         switch (PAInput.chooseOption("Phase 5 - Consult",
                 "List of Student with Attributed Proposals", "List of Students without Proposals Attributed and Candidature Options", "Available Proposals", "Attributed Proposals", "Consult Mentor Attribution", "Back to Phase 4")) {
-            case 1 -> System.out.println(printProposalAtributted(fsm.getFA()));
+            case 1 -> System.out.println(printProposalAtributted(facade.getFA()));
             case 2 -> {
                 StringBuilder sb = new StringBuilder();
-                sb.append(printObject(fsm.noProposalCandidature()));
+                sb.append(printObject(facade.noProposalCandidature()));
                 System.out.println(sb.toString());
             }
             case 3 -> {
                 ArrayList<Filtros> filters;
                 filters = new ArrayList<>();
                 filters.add(Filtros.AVAIABLE);
-                System.out.println(printObject(fsm.printFiltros(filters)));
+                System.out.println(printObject(facade.printFiltros(filters)));
             }
             case 4 -> {
                 ArrayList<Filtros> filters;
                 filters = new ArrayList<>();
                 filters.add(Filtros.NOTAVAIABLE);
-                System.out.println(printObject(fsm.printFiltros(filters)));
+                System.out.println(printObject(facade.printFiltros(filters)));
             }
             case 5 -> System.out.println(mentorByTeacherUI());
-            case 6 -> fsm.back();
+            case 6 -> facade.back();
         }
     }
 
     private void PhaseFourStateUI() {
-        if (fsm.getBlock(4) == StateBlock.BLOCKED) {
+        if (facade.getBlock(4) == StateBlock.BLOCKED) {
             switch (PAInput.chooseOption("Phase 4 - Blocked",
                     "Consult List of Students", "Consult List of Mentors", "Consult Mentor Attribution", "Back to Phase 3", "Move to Phase 5")) {
                 case 1 -> ListStudentsUI();
                 case 2 -> {
-                    for(Teacher t : fsm.getTeachers().values())
+                    for(Teacher t : facade.getTeachers().values())
                         System.out.println(t.toString());
                 }
                 case 3 -> printMentorAttributionUI();
-                case 4 -> fsm.back();
-                case 5 -> fsm.next(true);
+                case 4 -> facade.back();
+                case 5 -> facade.next(true);
             }
         }else {
             switch (PAInput.chooseOption("Phase 4 - Attribution of Mentors",
@@ -112,12 +102,12 @@ public class UIText {
                         System.out.println("There are no Students without mentor\n");
                 }
                 case 2 -> {
-                    for(Teacher t : fsm.getTeachers().values())
+                    for(Teacher t : facade.getTeachers().values())
                         System.out.println(t.toString());
                     }
                 case 3 -> printMentorAttributionUI();
-                case 4 -> fsm.back();
-                case 5 -> fsm.next(true);
+                case 4 -> facade.back();
+                case 5 -> facade.next(true);
             }
         }
     }
@@ -134,7 +124,7 @@ public class UIText {
     private String studentsMentorUI() {
         StringBuilder sb = new StringBuilder();
 
-        for(Student s : fsm.studentsMentor())
+        for(Student s : facade.studentsMentor())
             sb.append(s.toString()).append("\n");
 
         return sb.toString();
@@ -143,7 +133,7 @@ public class UIText {
     private String studentsNoMentorUI() {
         StringBuilder sb = new StringBuilder();
 
-        for(Student s : fsm.studentsNoMentor())
+        for(Student s : facade.studentsNoMentor())
             sb.append(s.toString()).append("\n");
 
         return sb.toString();
@@ -166,16 +156,16 @@ public class UIText {
 
             }
 
-            sb.append("Min: "+fsm.mentorByTeacher(email).get(0)).append("\n");
-            sb.append("Max: "+fsm.mentorByTeacher(email).get(1)).append("\n");
-            sb.append("Teacher: "+fsm.getTeachers().get(email).toString()).append("\n");
-            sb.append("Teacher Count: "+fsm.getTeachers().get(email).getMentorCount()).append("\n");
-            sb.append("Average: "+fsm.mentorByTeacher(email).get(3)).append("\n");
+            sb.append("Min: "+ facade.mentorByTeacher(email).get(0)).append("\n");
+            sb.append("Max: "+ facade.mentorByTeacher(email).get(1)).append("\n");
+            sb.append("Teacher: "+ facade.getTeachers().get(email).toString()).append("\n");
+            sb.append("Teacher Count: "+ facade.getTeachers().get(email).getMentorCount()).append("\n");
+            sb.append("Average: "+ facade.mentorByTeacher(email).get(3)).append("\n");
 
         } else {
-            sb.append("Min: "+fsm.mentorByTeacher(null).get(0)).append("\n");
-            sb.append("Max: "+fsm.mentorByTeacher(null).get(1)).append("\n");
-            sb.append("Average: "+fsm.mentorByTeacher(null).get(3)).append("\n");
+            sb.append("Min: "+ facade.mentorByTeacher(null).get(0)).append("\n");
+            sb.append("Max: "+ facade.mentorByTeacher(null).get(1)).append("\n");
+            sb.append("Average: "+ facade.mentorByTeacher(null).get(3)).append("\n");
         }
 
         return sb.toString();
@@ -184,15 +174,15 @@ public class UIText {
     private boolean mentorAttribution() {
         StringBuilder sb = new StringBuilder();
 
-        if(fsm.studentsMentor().isEmpty())
+        if(facade.studentsMentor().isEmpty())
             return false;
 
         sb.append("Students without a Mentor Attributed").append("\n");
-        for (Student s : fsm.studentsNoMentor())
+        for (Student s : facade.studentsNoMentor())
             sb.append(s).append("\n");
 
         System.out.println("Mentors\n");
-        for(Teacher t : fsm.getTeachers().values())
+        for(Teacher t : facade.getTeachers().values())
             sb.append(t.toString()).append("\n");
 
         System.out.println(sb.toString());
@@ -203,7 +193,7 @@ public class UIText {
             if(delimited.equalsIgnoreCase("quit"))
                 break;
             values = delimited.split(" ");
-        } while (!fsm.mentorAttribution(values));
+        } while (!facade.mentorAttribution(values));
 
 
         System.out.println("\nSuccess");
@@ -211,29 +201,31 @@ public class UIText {
     }
 
     private void PhaseThreeStateUI() {
-        if (fsm.getBlock(3) == StateBlock.BLOCKED) {
+        if (facade.getBlock(3) == StateBlock.BLOCKED) {
             switch (PAInput.chooseOption("Phase 3 - Blocked",
                     "Consult List of Students","Consult with Filters","Back to Phase 2","Move to Phase 4")) {
                 case 1 -> ListStudentsUI();
                 case 2 -> FilterPhaseThreeUI();
-                case 4 -> fsm.back();
-                case 3 -> fsm.next(false);
+                case 3 -> facade.back();
+                case 4 -> facade.next(false);
             }
         }else {
-            fsm.automaticOneP3();
-            fsm.automaticTwoP3();
-            if(fsm.getState() != AppState.UNTIE){
+            facade.automaticOneP3(); //TODO: mudar para o switch
+            facade.automaticTwoP3();
+            if(facade.getState() != AppState.UNTIE){
                 switch (PAInput.chooseOption("Phase 3 - Attribution of Proposals",
-                        "Manual Attribution", "Consult List of Students", "Consult with Filters", "Back to Phase 2", "Move to Phase 4")) {
+                        "Manual Attribution", "Consult List of Students", "Consult with Filters","Undo","Redo", "Back to Phase 2", "Move to Phase 4")) {
                     case 1 -> {
-                        if(!ManualAttributionUI(fsm.getStudents(), fsm.getCandidatures()))
+                        if(!ManualAttributionUI(facade.getStudents(), facade.getCandidatures()))
                             System.out.println("There are no Proposals or Students available\n");
                     }
                     case 2 -> ListStudentsUI();
                     case 3 -> FilterPhaseThreeUI();
-                    case 4 -> fsm.back();
-                    case 5 -> {
-                        if (!fsm.next(blockUI()))
+                    case 4 -> facade.undo();
+                    case 5 -> facade.redo();
+                    case 6 -> facade.back();
+                    case 7 -> {
+                        if (!facade.next(blockUI()))
                             System.out.println("The Blocking conditions where not met");
                     }
                 }
@@ -247,28 +239,28 @@ public class UIText {
         StringBuilder sb = new StringBuilder();
 
         System.out.println("Tied Students\n");
-        for(Student s : fsm.getStudentsTie())
+        for(Student s : facade.getStudentsTie())
             sb.append(s.toString()).append("\n");
 
         System.out.println(sb.toString());
 
         studentNumber = PAInput.readLong("Number of choosen Student: ");
 
-        if(!fsm.studentsTie(studentNumber))
+        if(!facade.studentsTie(studentNumber))
 
-        fsm.tieFA(fsm.getTieProposal(), fsm.getStudents().get(studentNumber));
-        fsm.back();
+        facade.tieFA(facade.getTieProposal(), facade.getStudents().get(studentNumber));
+        facade.back();
     }
 
     private void PhaseTwoStateUI() {
-        if (fsm.getBlock(2) == StateBlock.BLOCKED) {
+        if (facade.getBlock(2) == StateBlock.BLOCKED) {
             switch (PAInput.chooseOption("Phase 2 - Blocked",
                     "Print Candidatures","Print Students lists","Print Proposals","Back to Phase 1", "Move to Phase 3")) {
-                case 1 -> System.out.println(printCandidatures(fsm.getCandidatures()));
-                case 2 -> System.out.println(printPhaseTwo(fsm.getStudents(),fsm.getTeachers(),fsm.getSelfProp(),fsm.getCandidatures()));
+                case 1 -> System.out.println(printCandidatures(facade.getCandidatures()));
+                case 2 -> System.out.println(printPhaseTwo(facade.getStudents(), facade.getTeachers(), facade.getSelfProp(), facade.getCandidatures()));
                 case 3 -> FilterPhaseTwoUI();
-                case 4 -> fsm.back();
-                case 5 -> fsm.next(false);
+                case 4 -> facade.back();
+                case 5 -> facade.next(false);
             }
         }else {
 
@@ -277,33 +269,32 @@ public class UIText {
                 case 1 -> {
                     String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                    if (!fsm.upload(nameFile)) {
+                    if (!facade.upload(nameFile)) {
                         System.out.println("Something did not go right");
                     }else
                         System.out.println("Success uploading data");
                 }
-                case 2 ->  System.out.println(printCandidatures(fsm.getCandidatures()));
-                case 3 -> System.out.println(printPhaseTwo(fsm.getStudents(),fsm.getTeachers(),fsm.getSelfProp(),fsm.getCandidatures()));
+                case 2 ->  System.out.println(printCandidatures(facade.getCandidatures()));
+                case 3 -> System.out.println(printPhaseTwo(facade.getStudents(), facade.getTeachers(), facade.getSelfProp(), facade.getCandidatures()));
                 case 4 -> FilterPhaseTwoUI();
-                case 5 -> fsm.back();
+                case 5 -> facade.back();
                 case 6 -> {
-                    if (!fsm.next(blockUI()))
+                    if (!facade.next(blockUI()))
                         System.out.println("The Blocking conditions where not met");
                 }
             }
         }
     }
 
-
     private void ListStudentsUI() {
         boolean flag = false;
         while(!flag)
         switch (PAInput.chooseOption("Phase 3 - Consult List of Students",
                 "Students with Self-Proposed Candidatures", "Students with candidature already registered", "Students with Atributted Proposal", "Students without any Atributted Proposal", "Back to Phase 3 Menu")) {
-            case 1 -> System.out.println(printAssociatedSelfProposal(fsm.getStudents()));
-            case 2 -> System.out.println(printRegisteredCandidature(fsm.getCandidatures(),fsm.getStudents()));
-            case 3 -> System.out.println(printProposalAtributted(fsm.getFA()));
-            case 4 -> System.out.println(printWithoutProposalsAssociated(fsm.getStudents()));
+            case 1 -> System.out.println(printAssociatedSelfProposal(facade.getStudents()));
+            case 2 -> System.out.println(printRegisteredCandidature(facade.getCandidatures(), facade.getStudents()));
+            case 3 -> System.out.println(printProposalAtributted(facade.getFA()));
+            case 4 -> System.out.println(printWithoutProposalsAssociated(facade.getStudents()));
             case 5 -> flag = true;
         }
     }
@@ -315,11 +306,11 @@ public class UIText {
         filters = new ArrayList<>();
         filters.add(Filtros.AVAIABLE);
 
-        if(fsm.printFiltros(filters).isEmpty())
+        if(facade.printFiltros(filters).isEmpty())
              return false;
 
         sb.append("Students without a Proposal Attributed").append("\n");
-        for (Student s : fsm.studentsWOPropAssociated()) {
+        for (Student s : facade.studentsWOPropAssociated()) {
             studentsNumber.add(s.getStudentNumber());
             sb.append(s.toString()).append("\n");
         }
@@ -328,8 +319,7 @@ public class UIText {
 
         System.out.println("Available Proposals\n");
 
-
-        System.out.println(printObject(fsm.printFiltros(filters)));
+        System.out.println(printObject(facade.printFiltros(filters)));
 
         String[] values;
         String delimited = PAInput.readString("Number of Student and Code of Proposal: (Write \"quit\" to exit) \n Format: <Student number> <Proposal idCode>", false);
@@ -337,7 +327,7 @@ public class UIText {
             return false;
         values = delimited.split(" ");
 
-        if (!fsm.manualAtribution(values, studentsNumber))
+        if (!facade.manualAtribution(values, studentsNumber))
             return false;
 
         System.out.println("\nSuccess");
@@ -358,7 +348,7 @@ public class UIText {
                 case 5 -> flag = true;
             }
         }
-        System.out.println(printObject(fsm.printFiltros(filters)));
+        System.out.println(printObject(facade.printFiltros(filters)));
         PhaseThreeStateUI();
     }
 
@@ -376,26 +366,28 @@ public class UIText {
                 case 5 -> flag = true;
             }
         }
-        System.out.println(printObject(fsm.printFiltros(filters)));
+        System.out.println(printObject(facade.printFiltros(filters)));
         PhaseTwoStateUI();
     }
 
     protected void ChoosePhaseOneUI() {
-        if (fsm.getBlock(1) == StateBlock.BLOCKED) {
+        if (facade.getBlock(1) == StateBlock.BLOCKED) {
             switch (PAInput.chooseOption("Phase 1 - Blocked",
                     "Print", "Move to Phase 2")) {
-                case 1 -> System.out.println(printPhaseOne(fsm.getStudents(),fsm.getTeachers(),fsm.getSelfProp(),fsm.getProjects(),fsm.getInternships()));
-                case 2 -> fsm.next(false);
+                case 1 -> System.out.println(printPhaseOne(facade.getStudents(), facade.getTeachers(), facade.getSelfProp(), facade.getProjects(), facade.getInternships()));
+                case 2 -> facade.next(false);
             }
         }else{
             switch (PAInput.chooseOption("Phase 1",
-                    "Student Management", "Teacher Management", "PI Management",
+                    "Student Management", "Teacher Management", "PI Management","load","Save",
                     "Advance to Phase 2")) {
-                case 1 -> fsm.student();
-                case 2 -> fsm.teacher();
-                case 3 -> fsm.projectInternship();
-                case 4 -> {
-                    if (!fsm.next(blockUI()))
+                case 1 -> facade.student();
+                case 2 -> facade.teacher();
+                case 3 -> facade.projectInternship();
+                case 4 -> facade.loadM("load.dat");
+                case 5 -> facade.saveM("save.dat");
+                case 6 -> {
+                    if (!facade.next(blockUI()))
                         System.out.println("The Blocking conditions where not met");
                 }
 
@@ -410,7 +402,7 @@ public class UIText {
             case 1 -> {
                 String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                if(!fsm.upload(nameFile))
+                if(!facade.upload(nameFile))
                     System.out.println("Something did not go right");
                         else
                             System.out.println("Success uploading data");
@@ -418,17 +410,17 @@ public class UIText {
             case 2 -> InternshipManagementP1();
             case 3 -> ProjectsManagementP1();
             case 4 -> InternshipSelfProposedProjectManagementP1();
-            case 5 -> System.out.println(printPI(fsm.getSelfProp(),fsm.getProjects(),fsm.getInternships()));
-            case 6 -> fsm.back();
+            case 5 -> System.out.println(printPI(facade.getSelfProp(), facade.getProjects(), facade.getInternships()));
+            case 6 -> facade.back();
         }
     }
 
     private void InternshipSelfProposedProjectManagementP1() {
         switch (PAInput.chooseOption("Internship/Self proposed Project Management", "Insert", "Consult", "Erase", "Back to Phase 1 Menu")) {
             case 1 -> InsertSPP();
-            case 2 -> System.out.println(printMap(fsm.getSelfProp()));
+            case 2 -> System.out.println(printMap(facade.getSelfProp()));
             case 3 -> RemoveIPSP();
-            case 4 ->  fsm.back();
+            case 4 ->  facade.back();
         }
     }
 
@@ -437,7 +429,7 @@ public class UIText {
         String title = PAInput.readString("Title: ", true);
         long sNumber = PAInput.readLong("Student identification number: ");
 
-        if(!fsm.insertSelpProp(code,sNumber, title))
+        if(!facade.insertSelpProp(code,sNumber, title))
             System.out.println("Error adding self proposed project");
         else
             System.out.println("self proposed project successfully added");
@@ -445,7 +437,7 @@ public class UIText {
 
     private void RemoveIPSP() {
         String code = PAInput.readString("Identification code of the project that you wish to remove: ",true);
-        if (fsm.remove(code))
+        if (facade.remove(code))
             System.out.println("Self-Proposal successfully removed");
         else
             System.out.println("Error removing Self-Proposal");
@@ -455,9 +447,9 @@ public class UIText {
         switch (PAInput.chooseOption("Projects Management", "Insert", "Consult", "Erase", "Back to Phase 1 Menu")) {
 
             //case 2 -> InsertProj();
-            case 2 -> System.out.println(printMap(fsm.getProjects()));
+            case 2 -> System.out.println(printMap(facade.getProjects()));
             case 3 -> RemoveIPSP();
-            case 4 -> fsm.back();
+            case 4 -> facade.back();
         }
     }
 
@@ -490,9 +482,9 @@ public class UIText {
                 "Insert", "Consult", "Erase", "Back to Phase 1 Menu")) {
 
            // case 2 -> InsertIntern();
-            case 2 -> System.out.println(printMap(fsm.getInternships()));
+            case 2 -> System.out.println(printMap(facade.getInternships()));
             case 3 -> RemoveIPSP();
-            case 4 ->  fsm.back();
+            case 4 ->  facade.back();
         }
     }
     /*
@@ -521,25 +513,26 @@ public class UIText {
 
     private void ICEEStateUITeacher() {
         switch (PAInput.chooseOption("Teacher Management",
-                "Upload CSV", "Insert", "Consult", "Erase", "Back to Phase 1 Menu")) {
+                "Upload CSV", "Insert", "Consult", "Erase","Edit", "Back to Phase 1 Menu")) {
             case 1 -> {
                 String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                if (!fsm.upload(nameFile)) {
+                if (!facade.upload(nameFile)) {
                     System.out.println("Something did not go right");
                 }else
                     System.out.println("Success uploading data");
             }
             case 2 -> InsertTeacher();
-            case 3 -> System.out.println(printMap(fsm.getTeachers()));
+            case 3 -> System.out.println(printMap(facade.getTeachers()));
             case 4 -> RemoveTeacher();
-            case 5 -> fsm.back();
+            case 5 -> editTeacher();
+            case 6 -> facade.back();
         }
     }
 
     private void RemoveTeacher() {
         String email = PAInput.readString("Email of the Teacher that you wish to remove: ",true);
-        if (fsm.remove(email))
+        if (facade.remove(email))
             System.out.println("Teacher successfully removed");
         else
             System.out.println("Error removing Teacher");
@@ -548,7 +541,7 @@ public class UIText {
     private void InsertTeacher() {
         String name = PAInput.readString("Teacher Name: ", false);
         String email = PAInput.readString("Teacher Email: ", true);
-        if(!fsm.insertTeacher(name, email))
+        if(!facade.insertTeacher(name, email))
             System.out.println("Error adding Teacher");
         else
             System.out.println("Teacher successfully added");
@@ -558,15 +551,15 @@ public class UIText {
 
         String email = PAInput.readString("Email of the teacher that you wish to edit: ", true);
 
-        if(!fsm.getTeachers().containsKey(email)) {
+        if(!facade.getTeachers().containsKey(email)) {
             System.out.println("There is no Teacher with that email\n");
             return;
         }
 
         switch (PAInput.chooseOption("What do you wish to edit ?",
                 "Name", "Email")) {
-            case 1 -> fsm.setNameTeacher(PAInput.readString("New name of the teacher: ", true),email);
-            case 2 -> fsm.setEmailTeacher(PAInput.readString("New email of the teacher: ", true),email);
+            case 1 -> facade.setNameTeacher(PAInput.readString("New name of the teacher: ", true),email);
+            case 2 -> facade.setEmailTeacher(PAInput.readString("New email of the teacher: ", true),email);
 
         }
     }
@@ -575,45 +568,78 @@ public class UIText {
 
         long number = PAInput.readLong("Number of the student that you wish to edit: ");
 
-        if(!fsm.getStudents().containsKey(number)) {
-            System.out.println("There is no Student with that email\n");
+        if(!facade.getStudents().containsKey(number)) {
+            System.out.println("There is no Student with that number\n");
             return;
         }
 
         switch (PAInput.chooseOption("What do you wish to edit ?",
                 "Name", "Number")) {
-            case 1 -> fsm.setNameStudent(PAInput.readString("New name of the student: ", true), number);
-            case 2 -> fsm.setNumberStudent(PAInput.readLong("New number of the student: "), number);
+            case 1 -> facade.setNameStudent(PAInput.readString("New name of the student: ", true), number);
+            case 2 -> facade.setNumberStudent(PAInput.readLong("New number of the student: "), number);
             case 3 -> {
-                fsm.setCourseStudent(PAInput.readString("New course of the student: ", true), number);
+                facade.setCourseStudent(PAInput.readString("New course of the student: ", true), number);
             }
             case 4 -> {
-                fsm.setBranchStudent(PAInput.readString("New branch of the student: ", true), number);
+                facade.setBranchStudent(PAInput.readString("New branch of the student: ", true), number);
             }
             case 5 -> {
-                fsm.setScoreStudent(PAInput.readString("New score of the student: ", true), number);
+                facade.setScoreStudent(PAInput.readString("New score of the student: ", true), number);
             }
-            case 6 -> fsm.setApplicableInternshipStudent(number);
+            case 6 -> facade.setApplicableInternshipStudent(number);
 
         }
+    }
+
+    private void editCandidatures() {
+
+        String number = PAInput.readString("Number of the student that you wish to edit: ", true);
+
+        if(!facade.getCandidatures().containsKey(Long.parseLong( number))) {
+            System.out.println("There is no Student with that number\n");
+            return;
+        }
+
+        System.out.println("These are the actual candidatures of that student\n\n"+ facade.getCandidatures().get(Long.parseLong(number)).toString());
+
+        String values = PAInput.readString("Write the new code(s) of candidature that you wish - use this sintaxe <P010 P011 P012>", false);
+
+        facade.setCandidatures(values, number);
+
+    }
+
+    private void editMentor() {
+
+        long number = PAInput.readLong("Number of the student that you wish to edit: ");
+
+        if(!facade.getCandidatures().containsKey(number)) {
+            System.out.println("There is no Student with that number\n");
+            return;
+        }
+
+        System.out.println("These is the actual mentor of that student\n\n"+ facade.getStudentFA(number).toString());
+
+        facade.setMentor(PAInput.readString("New Mentor - introduce the email of the new Mentor: ", true), number);
+
     }
 
 
     protected void ICEEStateUIStudent() {
         switch (PAInput.chooseOption("Student Management",
-                "Upload CSV", "Insert", "Consult", "Erase", "Back to Phase 1 Menu")) {
+                "Upload CSV", "Insert", "Consult", "Erase","Edit", "Back to Phase 1 Menu")) {
             case 1 -> {
                 String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                if (!fsm.upload(nameFile)) {
+                if (!facade.upload(nameFile)) {
                     System.out.println("Something did not go right");
                 }else
                     System.out.println("Success uploading data");
             }
             case 2 -> InsertStudent();
-            case 3 -> System.out.println(printMap(fsm.getStudents()));
+            case 3 -> System.out.println(printMap(facade.getStudents()));
             case 4 -> RemoveStudent();
-            case 5 -> fsm.back();
+            case 5 -> editStudent();
+            case 6 -> facade.back();
         }
     }
 
@@ -632,7 +658,7 @@ public class UIText {
 
         branch = PAInput.readString("Minor Branch: ", true);
 
-        score= PAInput.readNumber("Student Score: "); //TODO: verificação
+        score= PAInput.readNumber("Student Score: ");
 
         boolean internship;
         switch (PAInput.chooseOption("Does the Student has access to Internships ?",
@@ -644,7 +670,7 @@ public class UIText {
 
 
 
-       if(!fsm.insertStudent(name, email, number, minor, branch, score,internship))
+       if(!facade.insertStudent(name, email, number, minor, branch, score,internship))
            System.out.println("Error adding Student");
        else
            System.out.println("Student successfully added");
@@ -652,7 +678,7 @@ public class UIText {
 
     protected void RemoveStudent(){
         Long number = PAInput.readLong("Number of the Student that you wish to remove: ");
-        if (fsm.remove(number))
+        if (facade.remove(number))
             System.out.println("Student successfully removed");
         else
             System.out.println("Error removing Student");
@@ -732,9 +758,9 @@ public class UIText {
                 sb.append(students.get(c)).append("\n");
         }
 
-        if(!fsm.studentsWOCandidature().isEmpty()) {
+        if(!facade.studentsWOCandidature().isEmpty()) {
             sb.append("Students without candidature").append("\n");
-            for (Student s : fsm.studentsWOCandidature()) {
+            for (Student s : facade.studentsWOCandidature()) {
                 sb.append(s).append("\n");
             }
         }
@@ -754,7 +780,7 @@ public class UIText {
     public String printAssociatedSelfProposal(HashMap<Long, Student> students) {
         StringBuilder sb = new StringBuilder();
         sb.append("Students with Self-Proposed Candidatures").append("\n");
-        for (Student s : fsm.studentsSelfPropCandidature()) {
+        for (Student s : facade.studentsSelfPropCandidature()) {
             sb.append(s).append("\n");
         }
         return sb.toString();
@@ -781,7 +807,7 @@ public class UIText {
     public String printWithoutProposalsAssociated(HashMap<Long, Student> students) {
         StringBuilder sb = new StringBuilder();
         sb.append("Students without any Atributted Proposal").append("\n");
-        for (Student s : fsm.studentsWOPropAssociated())
+        for (Student s : facade.studentsWOPropAssociated())
             sb.append(s.toString()).append("\n");
 
         return sb.toString();

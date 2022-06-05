@@ -1,0 +1,19 @@
+Rute Mirandela,a2020111112@isec.pt,2020111112,LEI,RAS,0.37,true
+Carlos Picoto,a2022987654@isec.pt,2022987654,LEIPL,SI,0.123,true
+Mário Tavares,a2019999999@isec.pt,2019999999,LEI,DA,0.37,false
+Fernanda Gaspar,a2015123456@isec.pt,2015123456,LEI,DA,0.37,true
+Rute Miranda,a2020111111@isec.pt,2020111111,LEI,RAS,0.37,true
+Ricardo Silva,rmc.silva@isec.pt
+José Marinho,fafe@isec.pt
+Álvaro Santos,ans@isec.pt
+Sarah Cunha,sarah.cunha@isec.pt
+João Durães,jduraes@isec.pt
+P041,Controlo de estacionamento,-1,RAS,Controlo de estacionamento,Rotundas.SA
+P010,Aplicação para gestão de condomínios,-1,DA,Aplicação para gestão de condomínios,Caves e Sótãos.Lda
+P032,Controlo de conaca1,-1,DA, SI,Controlo de conaca1,Rotundas.SA
+P031,Controlo de estacionamento,-1,SI,Controlo de estacionamento,Rotundas.SA
+P042,Controlo de conaca2,-1,RAS,Controlo de conaca2,Rotundas.SA
+P027,Shared Wallet,2022987654,P027,RAS, SI, DA,ans@isec.pt,
+P023,Registo de presenças e ausências,-1,P023,DA,jduraes@isec.pt,
+P024,Registo de presenças e ausências,-1,P024,DA,jduraes@isec.pt,
+P007,Comunicação através de sinais de fumo,2020111111

@@ -6,7 +6,9 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 
-public class T1P1State extends AppStateAdapter {
+import java.io.Serializable;
+
+public class T1P1State extends AppStateAdapter implements Serializable {
 
     public T1P1State(AppContext context, AppData data) {
         super(context, data);

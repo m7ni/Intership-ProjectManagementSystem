@@ -1,7 +1,7 @@
 package pt.isec.pa.model.fsm;
 
 import pt.isec.pa.model.data.AppData;
-import pt.isec.pa.apoio_poe.model.fsm.states.*;
+import pt.isec.pa.model.fsm.states.*;
 import pt.isec.pa.model.fsm.states.*;
 
 public enum AppState {

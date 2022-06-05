@@ -9,9 +9,10 @@ import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 import pt.isec.pa.model.data.Filtros;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PhaseTwoState extends AppStateAdapter {
+public class PhaseTwoState extends AppStateAdapter implements Serializable {
     public PhaseTwoState(AppContext context, AppData data) {
         super(context,data);
     }

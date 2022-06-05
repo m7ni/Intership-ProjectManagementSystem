@@ -1,6 +1,8 @@
 package pt.isec.pa.model.data;
 
-public enum Branches { //TODO: aplicar os enums
+import java.io.Serializable;
+
+public enum Branches implements Serializable {
     DA,
     RAS,
     SI;

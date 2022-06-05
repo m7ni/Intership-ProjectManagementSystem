@@ -1,6 +1,8 @@
 package pt.isec.pa.model.data;
 
-public enum Types {
+import java.io.Serializable;
+
+public enum Types  implements Serializable {
     STUDENT,
     TEACHER,
     PROPOSAL,

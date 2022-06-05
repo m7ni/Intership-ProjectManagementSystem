@@ -5,7 +5,9 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 
-public class PhaseFourState extends AppStateAdapter {
+import java.io.Serializable;
+
+public class PhaseFourState extends AppStateAdapter implements Serializable {
 
     public PhaseFourState(AppContext context, AppData data) {
         super(context,data);

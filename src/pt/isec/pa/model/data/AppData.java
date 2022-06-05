@@ -2,10 +2,10 @@ package pt.isec.pa.model.data;
 
 import pt.isec.pa.model.data.personel.Student;
 import pt.isec.pa.model.data.personel.Teacher;
-import pt.isec.pa.apoio_poe.model.data.proposals.*;
+import pt.isec.pa.model.data.proposals.*;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.utils.CSVModder;
-import pt.isec.pa.model.data.proposals.*;
+import pt.isec.pa.utils.PAInput;
 
 import java.io.Serializable;
 import java.util.*;
@@ -279,17 +279,17 @@ public class AppData implements Serializable {
         int pDA = 0, pRAS = 0, pSI = 0;
         for (Student s : students.values()) {
             switch (s.getBranch()) {
-                case Branches.DA -> sDA++;
-                case Branches.RAS -> sRAS++;
-                case Branches.SI -> sSI++;
+                case DA -> sDA++;
+                case RAS -> sRAS++;
+                case SI -> sSI++;
             }
         }
 
         for (Proposals p : projectsPLUSInterships) {
                 switch (p.getBranch().get(0)) {
-                    case Branches.DA -> pDA++;
-                    case Branches.RAS -> pRAS++;
-                    case Branches.SI -> pSI++;
+                    case DA -> pDA++;
+                    case RAS -> pRAS++;
+                    case SI -> pSI++;
                 }
         }
 
@@ -566,14 +566,17 @@ public class AppData implements Serializable {
         if(!students.get(Long.parseLong(values[0])).getInternship() && internships.containsKey(values[1]))
             return false;
 
+        /*
         for(Proposals p: proposalsCombinedMap.values()) {
             if(!p.getBranch().contains(students.get(Long.parseLong(values[0])).getBranch()))
                 return false;
         }
+        */
 
         if(studentsNumber.contains(Long.parseLong(values[0]))) {
             if(availableProposals.contains(values[1])) {
                 students.get(Long.parseLong(values[0])).setAssignedProposal(true);
+                proposalsCombinedMap.get(values[1]).setHasAssignedStudent(true);
                 FA.add(new FinalAtribution(proposalsCombinedMap.get(values[1]), students.get(Long.parseLong(values[0]))));
                 return true;
             }
@@ -749,6 +752,15 @@ public class AppData implements Serializable {
             }
     }
 
+    public FinalAtribution getStudentFA(long number) {
+        for(int i = 0 ; i < FA.size() ; i++) {
+            if(FA.get(i).getStudent().getStudentNumber() == number)
+                return FA.get(i);
+        }
+
+        return null;
+    }
+
     public List<Student> noProposalCandidature() {
         List<Student> aux = new ArrayList<>();
        for(Student s: students.values()){
@@ -797,6 +809,44 @@ public class AppData implements Serializable {
         teachers.remove(idCode);
         return true;
     }
+
+    public boolean removeC(long studentNumber) {
+        if (!candidatures.containsKey(studentNumber))
+            return false;
+
+        candidatures.remove(studentNumber);
+        return true;
+    }
+
+    public boolean removeFA(long studentNumber) {
+        for (FinalAtribution finalAtribution : FA) {
+            if (finalAtribution.getStudent().getStudentNumber() == studentNumber) {
+                FA.remove(finalAtribution);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeAllFA() {
+        for(long s : students.keySet())
+            removeFA(s);
+        return true;
+    }
+
+    public boolean removeMentor(String emailMentor) {
+
+        for (FinalAtribution finalAtribution : FA) {
+            if (finalAtribution.getMentor().getEmail().equals(emailMentor)) {
+                finalAtribution.setMentor(null);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //editTeacher
     
     public boolean editNameTeacher(String newName, String email) {
         if(!teachers.containsKey(email))
@@ -815,6 +865,8 @@ public class AppData implements Serializable {
 
         return true;
     }
+
+    //editStudent
 
     public boolean editNameStudent(String newName, long number) {
         if(!students.containsKey(number))
@@ -887,6 +939,8 @@ public class AppData implements Serializable {
         return true;
     }
 
+    //editPI
+
     public boolean editBranch(Proposals prop, List<String> branch){
         List<Branches> aux = new ArrayList<>();
 
@@ -956,20 +1010,63 @@ public class AppData implements Serializable {
         if(newID.isEmpty())
             return false;
 
-        if(candidatures.containsKey(newID))
-            return false;
-
         if(prop instanceof Project){
+            if(projects.containsKey(newID))
+                return false;
             projects.get(prop.getIdCode()).setID(newID);
             return true;
         }else if(prop instanceof Internship) {
+            if(internships.containsKey(newID))
+                return false;
             internships.get(prop.getIdCode()).setID(newID);
             return true;
         }else if (prop instanceof SelfProposed){
+            if(selfProp.containsKey(newID))
+                return false;
             selfProp.get(prop.getIdCode()).setID(newID);
             return true;
         }
         return false;
     }
+
+    //editCandidatures
+
+    public boolean editCandidatures(String newCandidatures, String number) {
+        if(!candidatures.containsKey(Long.parseLong(number)))
+            return false;
+
+        if(newCandidatures.isEmpty())
+            return false;
+
+        String[] values;
+        values = newCandidatures.split(" ");
+
+        removeC(Long.parseLong(number));
+
+        for(int i = values.length + 1 ; i > 0 ; i++) {
+            values[i] = values[i-1];
+        }
+        values[0] = number;
+
+        return addCandidature(values);
+    }
+
+    //editMentor
+
+    public boolean editMentor(String newMentor, long number) {
+
+        if(!teachers.containsKey(newMentor))
+            return false;
+
+        for (FinalAtribution finalAtribution : FA) {
+            if (finalAtribution.getStudent().getStudentNumber() == number) {
+                finalAtribution.setMentor(teachers.get(newMentor));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 }

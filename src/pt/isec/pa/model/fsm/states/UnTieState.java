@@ -5,7 +5,9 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 
-public class UnTieState extends AppStateAdapter {
+import java.io.Serializable;
+
+public class UnTieState extends AppStateAdapter implements Serializable {
     public UnTieState(AppContext context, AppData data) {
         super(context, data);
     }

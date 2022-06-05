@@ -40,6 +40,17 @@ public class FinalAtribution implements Serializable {
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Student \n").append(getStudent()).append("\n");
+        sb.append("Mentor \n").append(getMentor()).append("\n");
+        sb.append("Proposal \n").append(getFinalP()).append("\n");
+
+        return sb.toString();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if(this == obj)
             return true;
