@@ -5,23 +5,10 @@ import pt.isec.pa.model.data.AppData;
 import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.IAppState;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class Memento implements IMemento{
-    byte[] snapshot;
-
-    public Memento(Object obj) {
-        try (ByteArrayOutputStream baos =
-                     new ByteArrayOutputStream();
-             ObjectOutputStream oos =
-                     new ObjectOutputStream(baos)) {
-            oos.writeObject(obj);
-            snapshot = baos.toByteArray();
-        } catch (Exception e) { snapshot = null; }
-    }
+    private byte[] snapshot = null;
 
     @Override
     public Object getSnapshot() {
@@ -33,4 +20,16 @@ public class Memento implements IMemento{
             return ois.readObject();
         } catch (Exception e) { return null; }
     }
+
+    public Memento(Object obj) {
+        try (ByteArrayOutputStream baos =
+                     new ByteArrayOutputStream();
+             ObjectOutputStream oos =
+                     new ObjectOutputStream(baos)) {
+            oos.writeObject(obj);
+            snapshot = baos.toByteArray();
+        } catch (Exception e) { snapshot = null; }
+    }
+
+
 }

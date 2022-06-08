@@ -676,9 +676,7 @@ public class AppData implements Serializable {
     }
 
     public boolean studentsTie(long studentNumber) {
-        if(getStudentsTie().contains(getStudents().get(studentNumber)))
-            return true;
-        return false;
+        return getStudentsTie().contains(getStudents().get(studentNumber));
     }
 
     public boolean mentorAttribution(String[] values) {
@@ -753,9 +751,9 @@ public class AppData implements Serializable {
     }
 
     public FinalAtribution getStudentFA(long number) {
-        for(int i = 0 ; i < FA.size() ; i++) {
-            if(FA.get(i).getStudent().getStudentNumber() == number)
-                return FA.get(i);
+        for (FinalAtribution finalAtribution : FA) {
+            if (finalAtribution.getStudent().getStudentNumber() == number)
+                return finalAtribution;
         }
 
         return null;

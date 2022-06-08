@@ -267,9 +267,9 @@ public class UIText {
             switch (PAInput.chooseOption("Phase 2 - Candidatures Options",
                     "Upload CSV", "Consult Candidatures", "Consult Students", "Consult with Filters", "Back to Phase 1", "Move to Phase 3")) {
                 case 1 -> {
-                    String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
+                    //String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                    if (!facade.upload(nameFile)) {
+                    if (!facade.upload("candidaturas.txt")) {
                         System.out.println("Something did not go right");
                     }else
                         System.out.println("Success uploading data");
@@ -400,9 +400,9 @@ public class UIText {
                 "Internship Management", "Projects Management", "Self proposed Internship/Project Management","Print All",
                 "Back to Phase 1 Menu")) {
             case 1 -> {
-                String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
+              //  String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                if(!facade.upload(nameFile))
+                if(!facade.upload("PI.txt"))
                     System.out.println("Something did not go right");
                         else
                             System.out.println("Success uploading data");
@@ -515,9 +515,9 @@ public class UIText {
         switch (PAInput.chooseOption("Teacher Management",
                 "Upload CSV", "Insert", "Consult", "Erase","Edit", "Back to Phase 1 Menu")) {
             case 1 -> {
-                String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
+                //String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                if (!facade.upload(nameFile)) {
+                if (!facade.upload("professores.txt")) {
                     System.out.println("Something did not go right");
                 }else
                     System.out.println("Success uploading data");
@@ -628,9 +628,9 @@ public class UIText {
         switch (PAInput.chooseOption("Student Management",
                 "Upload CSV", "Insert", "Consult", "Erase","Edit", "Back to Phase 1 Menu")) {
             case 1 -> {
-                String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
+                //String nameFile = PAInput.readString("Filename that you want to import Format Example->(filename.txt): ", true);
 
-                if (!facade.upload(nameFile)) {
+                if (!facade.upload("alunos.txt")) {
                     System.out.println("Something did not go right");
                 }else
                     System.out.println("Success uploading data");

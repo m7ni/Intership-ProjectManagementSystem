@@ -2,6 +2,7 @@ package pt.isec.pa.model.data.personel;
 
 public class Teacher extends Person {
     private int mentorCount;
+
     public Teacher(String name, String email) {
         super(name, email);
         mentorCount =0;

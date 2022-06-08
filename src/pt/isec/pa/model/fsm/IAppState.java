@@ -3,9 +3,10 @@ package pt.isec.pa.model.fsm;
 import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.data.proposals.Proposals;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface IAppState  {
+public interface IAppState extends Serializable {
     void student();
     void teacher();
     void PI();

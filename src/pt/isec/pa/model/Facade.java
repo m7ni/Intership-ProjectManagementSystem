@@ -233,14 +233,6 @@ public class Facade implements Serializable, IOriginator {
         return context.setScoreStudent(newScore, number);
     }
 
-    public boolean saveM(String fileName) {
-        return mm.save(fileName, context);
-    }
-
-    public boolean loadM(String filename) {
-        return mm.load(filename,context);
-    }
-
     public boolean setCandidatures(String values, String number) {
         return context.setCandidatures(values, number);
     }
@@ -252,21 +244,32 @@ public class Facade implements Serializable, IOriginator {
     public boolean setMentor(String newMentor, long number) {
         return context.setMentor(newMentor, number);
     }
+
     @Override
     public IMemento save() {
         return new Memento(this);
     }
 
     public void undo() {
-        ct.undo();
+        if(ct.hasUndo())
+            ct.undo();
     }
 
     public void redo() {
-        ct.redo();
+        if(ct.hasRedo())
+            ct.redo();
     }
 
     public void reset() {
         ct.reset();
+    }
+
+    public boolean saveM(String fileName) {
+        return mm.save(fileName, context);
+    }
+
+    public Boolean loadM(String fileName) {
+        return mm.load(fileName, context);
     }
 
     public boolean hasUndo() {
