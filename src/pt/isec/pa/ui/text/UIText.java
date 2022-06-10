@@ -238,6 +238,7 @@ public class UIText {
 
         StringBuilder sb = new StringBuilder();
 
+
         System.out.println("Tied Students\n");
         for(Student s : facade.getStudentsTie())
             sb.append(s.toString()).append("\n");
@@ -404,8 +405,8 @@ public class UIText {
 
                 if(!facade.upload("PI.txt"))
                     System.out.println("Something did not go right");
-                        else
-                            System.out.println("Success uploading data");
+                else
+                    System.out.println("Success uploading data");
             }
             case 2 -> InternshipManagementP1();
             case 3 -> ProjectsManagementP1();
@@ -643,7 +644,6 @@ public class UIText {
         }
     }
 
-
     protected void InsertStudent() {
         String name = PAInput.readString("Student Name: ", false);
         String email = PAInput.readString("Student Email: ", true);
@@ -667,8 +667,6 @@ public class UIText {
             case 2 -> internship = false;
             default -> internship = false;
         }
-
-
 
        if(!facade.insertStudent(name, email, number, minor, branch, score,internship))
            System.out.println("Error adding Student");

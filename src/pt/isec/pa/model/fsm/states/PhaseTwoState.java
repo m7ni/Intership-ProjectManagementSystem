@@ -9,6 +9,7 @@ import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 import pt.isec.pa.model.data.Filtros;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class PhaseTwoState extends AppStateAdapter implements Serializable {
     }
 
     @Override
-    public boolean upload(String nameFile) {
-        return data.uploadCSV(nameFile, Types.CANDIDATURE);
+    public boolean upload(File file) {
+        return data.uploadCSV(file, Types.CANDIDATURE);
     }
 
     public AppState getState() {

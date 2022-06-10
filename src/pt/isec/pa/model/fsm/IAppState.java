@@ -3,6 +3,7 @@ package pt.isec.pa.model.fsm;
 import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.data.proposals.Proposals;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface IAppState extends Serializable {
     boolean erase(Long number);
     boolean erase(String email);
     boolean sameState();
-    boolean upload(String nameFile);
+    boolean upload(File file);
     AppState getState();
     String toString();
     boolean export();

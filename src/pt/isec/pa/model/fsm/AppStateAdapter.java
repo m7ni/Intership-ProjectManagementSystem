@@ -4,6 +4,7 @@ import pt.isec.pa.model.data.AppData;
 import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.data.proposals.Proposals;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -128,7 +129,7 @@ public class AppStateAdapter implements IAppState, Serializable {
     }
 
     @Override
-    public boolean upload(String nameFile) {
+    public boolean upload(File file) {
         return false;
     }
 

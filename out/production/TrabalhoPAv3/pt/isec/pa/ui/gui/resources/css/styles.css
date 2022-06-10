@@ -1,0 +1,84 @@
+/*
+.button {
+    -fx-font-family: "Courier New";
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+.label {
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+#labelnone {
+    -fx-font-family: "Times New Roman";
+    -fx-font-style: italic;
+    -fx-text-fill: #404040;
+    -fx-font-size: 16;
+}*/
+
+.textField{
+    -fx-border-color: red;
+}
+#Title{
+    font-family: 'Joan', serif;
+}
+
+#tfInsert {
+    -fx-border-width: 0.2em;
+    -fx-border-style: solid;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 0.12em;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: white;
+    -fx-max-width: 210;
+}
+.label{
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: white;
+    -fx-max-width: 210;
+}
+
+#lbTitle {
+    -fx-border-width: 0.2em;
+    -fx-border-style: solid;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 0.12em;
+    -fx-font-weight: 1000;
+    -fx-font-size: 20;
+    -fx-text-fill: purple;
+    -fx-background-color: white;
+    -fx-font-family: Roboto,sans-serif;
+    -fx-minx-width: 00;
+}
+
+#hBoxChoice{
+    -fx-border-width: 0.2em;
+    -fx-border-style: solid;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 0.12em;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: white;
+    -fx-max-width: 210;
+
+}
+#ChoiceBoxL{
+  -fx-text-fill: white;
+}
+.button{
+    -fx-padding:0.35em 1.2em;
+    -fx-border-width: 0.2em;
+    -fx-border-style: solid;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 0.12em;
+    -fx-font-family: Roboto,sans-serif;
+    -fx-font-weight: 900;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-background-color: transparent;
+}

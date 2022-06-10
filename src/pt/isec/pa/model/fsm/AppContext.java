@@ -83,8 +83,8 @@ public class AppContext implements Serializable {
         state.enterAPP();
     }
 
-    public boolean upload(String nameFile) {
-        return state.upload(nameFile);
+    public boolean upload(File file) {
+        return state.upload(file);
     }
 
     public boolean export() {

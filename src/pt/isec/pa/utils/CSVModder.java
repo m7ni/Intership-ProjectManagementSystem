@@ -19,10 +19,9 @@ public class CSVModder {
         this.data = data;
     }
 
-    public boolean SUpload(String nametxt) {
+    public boolean SUpload(File file) {
         int contador=0;
         try {
-            File file = new File(nametxt);
 
             if(!file.exists())
                 return false;
@@ -48,10 +47,10 @@ public class CSVModder {
         return true;
     }
 
-    public boolean TUpload(String nametxt) {
+    public boolean TUpload(File file) {
         int contador=0;
         try {
-            File file = new File(nametxt);
+
 
             if(!file.exists())
                 return false;
@@ -75,10 +74,10 @@ public class CSVModder {
         return true;
     }
 
-    public boolean PIUpload(String nametxt) {
+    public boolean PIUpload(File file) {
         int contador=0;
         try {
-            File file = new File(nametxt);
+
 
             if(!file.exists())
                 return false;
@@ -139,10 +138,9 @@ public class CSVModder {
         return branchesEnum;
     }
 
-    public boolean CUpload(String nametxt) {
+    public boolean CUpload(File file) {
         int contador=0;
         try {
-            File file = new File(nametxt);
 
             if(!file.exists())
                 return false;

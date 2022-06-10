@@ -7,6 +7,7 @@ import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.utils.CSVModder;
 import pt.isec.pa.utils.PAInput;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Predicate;
@@ -480,14 +481,14 @@ public class AppData implements Serializable {
         return false;
     }
 
-    public boolean uploadCSV(String nametxt, Types type) {
+    public boolean uploadCSV(File file, Types type) {
         CSVModder csv = new CSVModder(this);
 
         switch (type){
-            case STUDENT -> { return csv.SUpload(nametxt); }
-            case TEACHER ->{  return csv.TUpload(nametxt); }
-            case PROPOSAL -> {  return csv.PIUpload(nametxt); }
-            case CANDIDATURE -> { return csv.CUpload(nametxt); }
+            case STUDENT -> { return csv.SUpload(file); }
+            case TEACHER ->{  return csv.TUpload(file); }
+            case PROPOSAL -> {  return csv.PIUpload(file); }
+            case CANDIDATURE -> { return csv.CUpload(file); }
         }
         return false;
     }

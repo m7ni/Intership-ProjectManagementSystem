@@ -6,6 +6,7 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.AppStateAdapter;
 
+import java.io.File;
 import java.io.Serializable;
 
 public class ICEEPIState extends AppStateAdapter implements Serializable {
@@ -16,8 +17,8 @@ public class ICEEPIState extends AppStateAdapter implements Serializable {
 
 
     @Override
-    public boolean upload(String namFile) {
-        return data.uploadCSV(namFile, Types.PROPOSAL);
+    public boolean upload(File file) {
+        return data.uploadCSV(file, Types.PROPOSAL);
     }
 
     @Override
