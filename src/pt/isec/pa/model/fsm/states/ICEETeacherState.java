@@ -42,6 +42,10 @@ public class ICEETeacherState extends AppStateAdapter implements Serializable {
         return AppState.PONE_TEACHER;
     }
 
+    @Override
+    public String toString() {
+        return "Phase ONE";
+    }
 
     public boolean back() {
         changeState(AppState.CHOOSE_PHASE_ONE);

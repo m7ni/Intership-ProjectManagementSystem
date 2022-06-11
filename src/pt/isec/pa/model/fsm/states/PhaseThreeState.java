@@ -33,7 +33,10 @@ public class PhaseThreeState extends AppStateAdapter implements Serializable {
         }
         return true;
     }
-
+    @Override
+    public String toString() {
+        return "Phase THREE";
+    }
     @Override
     public boolean next(Boolean block) {
 

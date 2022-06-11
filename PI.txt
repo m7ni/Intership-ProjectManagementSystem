@@ -2,10 +2,4 @@ T1,P010,DA,Aplicação para gestão de condomínios,Caves e Sótãos.Lda
 T2,P027,RAS|SI|DA,Shared Wallet,ans@isec.pt,2022987654
 T3,P007,Comunicação através de sinais de fumo,2020111111
 T2,P023,DA,Registo de presenças e ausências,jduraes@isec.pt
-T1,P031,SI,Controlo de estacionamento,Rotundas.SA
-T1,P032,DA|SI,Controlo de conaca1,Rotundas.SA
-T2,P033,SI,Controlo de buceta1,Rotundas.SA,2020111112
-T2,P024,DA,Registo de presenças e ausências,jduraes@isec.pt
-T1,P041,RAS,Controlo de estacionamento,Rotundas.SA
-T1,P042,RAS,Controlo de conaca2,Rotundas.SA
-T2,P043,DA|SI|RAS,Controlo de buceta2,Rotundas.SA,2020111112
+T1,P031,DA|SI,Controlo de estacionamento,Rotundas.SA

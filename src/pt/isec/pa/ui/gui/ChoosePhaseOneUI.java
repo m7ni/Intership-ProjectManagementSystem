@@ -23,15 +23,16 @@ public class ChoosePhaseOneUI extends BorderPane {
 
     private void createViews() {
         btnStudent = new Button("Student Edition");
-        btnStudent.setMinWidth(100);
+        btnStudent.setMinWidth(200);
         btnTeacher  = new Button("Teacher Edition");
-        btnTeacher.setMinWidth(100);
+        btnTeacher.setMinWidth(200);
         btnPI  = new Button("Proposal Edition");
-        btnTeacher.setMinWidth(100);
+        btnPI.setMinWidth(200);
         title = new Label("PHASE ONE MENU");
-        title.setMinWidth(100);
+        title.setMinWidth(300);
         title.setMinHeight(30);
         title.setId("lbTitle");
+        title.setAlignment(Pos.CENTER);
         VBox Vbox = new VBox(title,btnStudent,btnTeacher,btnPI);
         Vbox.setSpacing(4);
         this.setCenter(Vbox);

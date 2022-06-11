@@ -35,7 +35,10 @@ public class T1P1State extends AppStateAdapter implements Serializable {
     public AppState getState() {
         return AppState.PONE_INTERNSHIP;
     }
-
+    @Override
+    public String toString() {
+        return "Phase ONE";
+    }
     @Override
     public boolean back() {
         changeState(AppState.PONE_PI);

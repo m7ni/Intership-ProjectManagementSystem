@@ -58,6 +58,8 @@ public class CSVModder {
             while (myReader.hasNextLine()) {
                 String commaDelimited  = myReader.nextLine();
                 String[] values = commaDelimited.split(",");
+                if(values.length!=2)
+                    return false;
                 if(!data.addTeacher(values[0], values[1]))
                 contador++;
             }
@@ -77,8 +79,6 @@ public class CSVModder {
     public boolean PIUpload(File file) {
         int contador=0;
         try {
-
-
             if(!file.exists())
                 return false;
             Scanner myReader = new Scanner(file);

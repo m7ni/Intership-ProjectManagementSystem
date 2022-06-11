@@ -11,6 +11,11 @@ public interface IAppState extends Serializable {
     void student();
     void teacher();
     void PI();
+
+    void goInternship();
+    void goProject();
+    void goSelfProp();
+
     boolean next(Boolean block);
     boolean back();
     void enterAPP();
@@ -22,7 +27,6 @@ public interface IAppState extends Serializable {
     AppState getState();
     String toString();
     boolean export();
-
     boolean unTie();
     List<Proposals> printFiltro(List<Filtros> filtros);
 

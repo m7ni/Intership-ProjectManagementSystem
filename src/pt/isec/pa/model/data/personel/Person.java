@@ -15,8 +15,8 @@ public abstract class Person implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("--------> Name [").append(name).append("]").append("\n");
-        sb.append("          Email [").append(email).append("]").append("\n");
+        sb.append("          Name [").append(name).append("]");
+        sb.append("          Email [").append(email).append("]");
 
         return sb.toString();
     }

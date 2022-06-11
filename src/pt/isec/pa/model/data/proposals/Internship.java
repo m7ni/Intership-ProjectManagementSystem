@@ -33,7 +33,6 @@ public class Internship extends Proposals {
         sb.append(super.toString());
         String strbranch = branch.toString();
         sb.append("          Branch [").append(strbranch.substring(1,strbranch.length()-1)).append("]").append("\n");
-
         sb.append("          Local [").append(local).append("]").append("\n");
         return sb.toString();
     }

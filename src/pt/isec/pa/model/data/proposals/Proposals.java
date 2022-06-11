@@ -49,7 +49,7 @@ public abstract class Proposals implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("--------> Id Code [").append(idCode).append("]").append("\n");
+        sb.append("          Id Code [").append(idCode).append("]").append("\n");
         sb.append("          Title [").append(title).append("]").append("\n");
         if(studentNumber!=-1)
             sb.append("          Number of Student [").append(studentNumber).append("]").append("\n");

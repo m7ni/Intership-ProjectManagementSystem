@@ -31,6 +31,10 @@ public class PhaseFourState extends AppStateAdapter implements Serializable {
         return true;
     }
     @Override
+    public String toString() {
+        return "Phase FOUR";
+    }
+    @Override
     public boolean back() {
 
         changeState(AppState.PHASE_THREE);

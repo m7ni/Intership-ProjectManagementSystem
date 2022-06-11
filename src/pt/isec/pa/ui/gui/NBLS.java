@@ -1,7 +1,9 @@
 package pt.isec.pa.ui.gui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import pt.isec.pa.model.Facade;
@@ -15,6 +17,7 @@ import java.io.File;
 public class NBLS extends HBox {
     Facade facade;
     Button btnSave,btnLoad,btnNext,btnBack;
+    Label title;
 
     public NBLS(Facade facade) {
         this.facade = facade;
@@ -24,6 +27,12 @@ public class NBLS extends HBox {
     }
 
     private void createViews() {
+        HBox hb = new HBox();
+        title = new Label();
+        title.setAlignment(Pos.BASELINE_LEFT);
+        title.setId("lbTitle");
+        hb.getChildren().add(title);
+        hb.setPadding(new Insets(10,50,0,0));
         btnSave = new Button("SAVE");
         btnSave.setMinWidth(100);
         btnLoad  = new Button("LOAD");
@@ -35,7 +44,7 @@ public class NBLS extends HBox {
 
         HBox hBox = new HBox();
 
-        this.getChildren().addAll(btnBack,btnSave,btnLoad,btnNext);
+        this.getChildren().addAll(hb,btnBack,btnSave,btnLoad,btnNext);
         this.setAlignment(Pos.CENTER);
     }
 
@@ -60,7 +69,6 @@ public class NBLS extends HBox {
             }
             else
                 facade.next(false);
-
         });
 
         btnSave.setOnAction(actionEvent -> {
@@ -69,16 +77,12 @@ public class NBLS extends HBox {
     }
 
     private void update() {
-        if (facade.getState() == AppState.CHOOSE_PHASE_ONE || facade.getState() == AppState.UNTIE ) {
-           btnBack.setVisible(false);
-            btnNext.setVisible(true);
-            return;
-        }
-
-        if (facade.getState() == AppState.PONE_PI || facade.getState() == AppState.PONE_STUDENT || facade.getState() == AppState.PONE_TEACHER || facade.getState() == AppState.PONE_STUDENT || facade.getState() == AppState.PONE_PROJECT || facade.getState() == AppState.PONE_SELFPROP || facade.getState() == AppState.PONE_INTERNSHIP || facade.getState() == AppState.PHASE_FIVE) {
-            btnNext.setVisible(false);
-            btnBack.setVisible(true);
-            return;
+        title.setText(facade.toString());
+        btnNext.setVisible(true);
+        btnBack.setVisible(true);
+        switch (facade.getState()) {
+            case CHOOSE_PHASE_ONE, UNTIE -> btnBack.setVisible(false);
+            case PONE_PI, PONE_STUDENT, PONE_TEACHER, PONE_INTERNSHIP, PONE_PROJECT, PONE_SELFPROP, PHASE_FIVE -> btnNext.setVisible(false);
         }
     }
 

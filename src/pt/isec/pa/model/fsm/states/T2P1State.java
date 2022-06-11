@@ -35,7 +35,10 @@ public class T2P1State extends AppStateAdapter implements Serializable {
     public AppState getState() {
         return AppState.PONE_PROJECT;
     }
-
+    @Override
+    public String toString() {
+        return "Phase ONE";
+    }
     @Override
     public boolean back() {
         changeState(AppState.PONE_PI);

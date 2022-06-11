@@ -13,7 +13,6 @@ import pt.isec.pa.model.Facade;
 
 public class BlockUI extends Stage {
     Facade facade;
-    private final int HEIGHT = 30;
 
     public BlockUI(Window parent, Facade facade) {
         this.facade = facade;
@@ -43,18 +42,24 @@ public class BlockUI extends Stage {
         btns.setAlignment(Pos.CENTER);
 
         Button btnYes = new Button("Yes");
-        btnYes.setPrefHeight(HEIGHT);
+        btnYes.setPrefHeight(30);
         btnYes.setBackground(new Background(new BackgroundFill(Color.rgb(204, 153, 255), new CornerRadii(3), Insets.EMPTY)));
         btnYes.setStyle("-fx-text-fill: #ffffff");
         btnYes.setOnAction(e -> {
-            facade.next(false);
+            if(!facade.next(true)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Alert");
+                alert.setHeaderText(null);
+                alert.setContentText("The Blocking Conditions where not met");
+                alert.showAndWait();
+            }
             this.close();
         });
 
         Button btnNo = new Button("No");
-        btnNo.setPrefHeight(HEIGHT);
+        btnNo.setPrefHeight(30);
         btnNo.setOnAction(e -> {
-            facade.next(true);
+            facade.next(false);
             this.close();
         });
 

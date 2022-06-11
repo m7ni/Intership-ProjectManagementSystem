@@ -38,6 +38,11 @@ public class ChoosePhaseOne extends AppStateAdapter implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Phase ONE";
+    }
+
+    @Override
     public boolean next(Boolean block) {
 
         if(block && (data.getBlock(1)== StateBlock.UNLOCKED)){ //wants to block and is not already blocked

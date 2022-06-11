@@ -20,6 +20,10 @@ public class PhaseFiveState extends AppStateAdapter implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Phase FIVE";
+    }
+    @Override
     public boolean back() {
 
         changeState(AppState.PHASE_FOUR);

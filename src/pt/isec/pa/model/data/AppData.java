@@ -40,6 +40,13 @@ public class AppData implements Serializable {
         block = Arrays.asList(StateBlock.UNLOCKED, StateBlock.UNLOCKED, StateBlock.UNLOCKED, StateBlock.UNLOCKED, StateBlock.UNLOCKED);
     }
 
+    public HashMap<String, Proposals> getProposalsCombined() {
+        HashMap<String, Proposals> proposalsCombinedMap = new HashMap<>(projects);
+        proposalsCombinedMap.putAll(internships);
+        proposalsCombinedMap.putAll(selfProp);
+        return proposalsCombinedMap;
+    }
+
     public void automaticOneP3(){ //automatic distribution of self-proposed
         List<Proposals> projectsPLUSselfProp = new ArrayList<>(projects.values());
         projectsPLUSselfProp.addAll(selfProp.values());
@@ -292,6 +299,20 @@ public class AppData implements Serializable {
                     case RAS -> pRAS++;
                     case SI -> pSI++;
                 }
+                if(p.getBranch().size()==2){
+                    switch (p.getBranch().get(1)) {
+                        case DA -> pDA++;
+                        case RAS -> pRAS++;
+                        case SI -> pSI++;
+                    }
+                }
+                if(p.getBranch().size()==3){
+                    switch (p.getBranch().get(2)) {
+                        case DA -> pDA++;
+                        case RAS -> pRAS++;
+                        case SI -> pSI++;
+                    }
+                }
         }
 
         return pDA >= sDA && pRAS >= sRAS && pSI >= sSI && !students.isEmpty();
@@ -311,19 +332,23 @@ public class AppData implements Serializable {
         if (students.containsKey(number))
             return false;
 
-        switch(minor){
+
+        switch(minor.toUpperCase(Locale.ROOT)){
             case "LEI" -> mn = Minor.LEI;
             case "LEI-PL" -> mn = Minor.LEIPL;
             default ->{ return false;}
         }
 
-        switch(branch){
+        switch(branch.toUpperCase(Locale.ROOT)){
             case "DA" -> br = Branches.DA;
             case "RAS" -> br = Branches.RAS;
             case "SI" -> br = Branches.SI;
             default ->{ return false;}
         }
 
+
+        if(number.toString().length() != 10)
+            return false;
 
         if (score < 0.0 || score > 1.0)
             return false;
@@ -363,8 +388,10 @@ public class AppData implements Serializable {
         if (studentProposalCheck(idCode, number)) return false;
         aux = new Internship(idCode, number, branch, title, local);
 
-        if (number != -1)
+        if (number != -1){
             aux.setHasAssignedStudent(true);
+            students.get(number).setAssignedProposal(true);
+        }
 
 
         internships.put(idCode, aux);
@@ -386,10 +413,10 @@ public class AppData implements Serializable {
 
         aux = new Project(idCode, number, branch, title, tEmail);
 
-        if (number != -1)
+        if (number != -1){
             aux.setHasAssignedStudent(true);
-
-
+            students.get(number).setAssignedProposal(true);
+        }
 
         projects.put(idCode, aux);
         return true;
@@ -474,7 +501,7 @@ public class AppData implements Serializable {
                 if (!selfProp.containsKey((String) obj))
                     return false;
 
-                teachers.remove((String) obj);
+                selfProp.remove((String) obj);
                 return true;
             }
         }
@@ -629,6 +656,8 @@ public class AppData implements Serializable {
     public List<Student> getStudentsTie() {
         return studentsTie;
     }
+
+    //public List
 
     public List<Student> studentsMentor(){
         List<Student> wm = new ArrayList<>();
@@ -860,6 +889,9 @@ public class AppData implements Serializable {
         if(!teachers.containsKey(email))
             return false;
 
+        if(teachers.containsKey(newEmail))
+            return false;
+
         teachers.get(email).setEmail(newEmail);
 
         return true;
@@ -876,12 +908,24 @@ public class AppData implements Serializable {
         return true;
     }
 
+    public boolean editEmailStudent(String newEmail, long number) {
+        if(!students.containsKey(number))
+            return false;
+
+        students.get(number).setEmail(newEmail);
+
+        return true;
+    }
+
     public boolean editNumberStudent(long newNumber, long number) {
         if(!students.containsKey(number))
             return false;
 
-        if(!students.containsKey(newNumber))
-            students.get(number).setStudentNumber(newNumber);
+        if(students.containsKey(newNumber))
+            return false;
+
+        students.get(number).setStudentNumber(newNumber);
+
 
         return true;
     }
@@ -998,8 +1042,33 @@ public class AppData implements Serializable {
         if(!teachers.containsKey(email))
             return false;
 
-        if (prop instanceof Internship) {
+        if (prop instanceof Project) {
             projects.get(prop.getIdCode()).settEmail(email);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean editNumberStudentProposals(long studentNumber,Proposals prop) {
+
+        if(!students.containsKey(studentNumber))
+            return false;
+
+        if(students.get(studentNumber).isAssignedProposal())
+            return false;
+
+        if (prop instanceof Internship) {
+            if(!students.get(studentNumber).getInternship())
+                return false;
+            internships.get(prop.getIdCode()).setStudentNumber(studentNumber);
+            return true;
+        }
+        if (prop instanceof Project) {
+            projects.get(prop.getIdCode()).setStudentNumber(studentNumber);
+            return true;
+        }
+        if (prop instanceof SelfProposed) {
+            selfProp.get(prop.getIdCode()).setStudentNumber(studentNumber);
             return true;
         }
         return false;
@@ -1038,20 +1107,26 @@ public class AppData implements Serializable {
             return false;
 
         String[] values;
-        values = newCandidatures.split(" ");
+
+        StringBuilder aux = new StringBuilder(number);
+        aux.append(",");
+        aux.append(newCandidatures);
+        values = aux.toString().split(",");
 
         removeC(Long.parseLong(number));
-
-        for(int i = values.length + 1 ; i > 0 ; i++) {
-            values[i] = values[i-1];
-        }
-        values[0] = number;
 
         return addCandidature(values);
     }
 
     //editMentor
-
+    public ArrayList<Student> studentsWCandidature(){
+        ArrayList<Student> aux = new ArrayList<>();
+        if(!candidatures.isEmpty()) {
+            for (long c : candidatures.keySet())
+                aux.add(students.get(c));
+        }
+        return aux;
+    }
     public boolean editMentor(String newMentor, long number) {
 
         if(!teachers.containsKey(newMentor))

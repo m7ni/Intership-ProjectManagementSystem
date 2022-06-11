@@ -66,6 +66,9 @@
     -fx-max-width: 210;
 
 }
+#checkBoxL{
+    -fx-text-fill: white;
+}
 #ChoiceBoxL{
   -fx-text-fill: white;
 }
@@ -81,4 +84,11 @@
     -fx-text-fill: white;
     -fx-text-alignment: center;
     -fx-background-color: transparent;
+}
+
+#CheckBoxI{
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: white;
+    -fx-max-width: 210;
 }

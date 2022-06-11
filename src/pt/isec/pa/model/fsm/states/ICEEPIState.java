@@ -27,6 +27,25 @@ public class ICEEPIState extends AppStateAdapter implements Serializable {
         return true;
     }
 
+    @Override
+    public void goInternship() {
+        changeState(AppState.PONE_INTERNSHIP);
+    }
+
+    @Override
+    public void goProject() {
+        changeState(AppState.PONE_PROJECT);
+    }
+
+    @Override
+    public void goSelfProp() {
+        changeState(AppState.PONE_SELFPROP);
+    }
+
+    @Override
+    public String toString() {
+        return "Phase ONE";
+    }
 
     @Override
     public AppState getState() {

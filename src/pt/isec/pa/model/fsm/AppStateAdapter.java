@@ -38,6 +38,21 @@ public class AppStateAdapter implements IAppState, Serializable {
     }
 
     @Override
+    public void goInternship() {
+
+    }
+
+    @Override
+    public void goProject() {
+
+    }
+
+    @Override
+    public void goSelfProp() {
+
+    }
+
+    @Override
     public boolean sameState() {
         return false;
     }
@@ -150,6 +165,11 @@ public class AppStateAdapter implements IAppState, Serializable {
     public void setEmail(String newEmail, String email)   //TODO Mudar para só setTeacher
     {
 
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     public void setName(String newName, long number) {}

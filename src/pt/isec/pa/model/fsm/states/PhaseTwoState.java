@@ -42,6 +42,10 @@ public class PhaseTwoState extends AppStateAdapter implements Serializable {
         return true;
     }
     @Override
+    public String toString() {
+        return "Phase TWO";
+    }
+    @Override
     public List<Proposals> printFiltro(List<Filtros> filtros) {
         return data.printFiltros(filtros,AppState.PHASE_TWO);
     }
