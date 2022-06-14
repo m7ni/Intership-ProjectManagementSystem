@@ -206,10 +206,11 @@ public class AppContext implements Serializable {
         return app.getFA();
     }
 
+    /* só para a UIText
     public boolean manualAtribution(String[] values, List<Long> studentsNumber) {
         return app.manualAtribution(values, studentsNumber);
     }
-
+*/
     public HashMap<String, Proposals> getProposalsCombined() {
         return app.getProposalsCombined();
     }
@@ -290,6 +291,14 @@ public class AppContext implements Serializable {
         return app.exportCSVP34(nametxt, State);
     }
 
+    public List<Proposals> getAvailableProposals() {
+        return app.getAvailableProposals();
+    }
+
+    public boolean manualAtribution(long studentNumber, String idCode) {
+        return app.manualAtribution(studentNumber, idCode);
+    }
+
     public void setBlock(int phase) {
         app.setBlock(phase);
     }
@@ -306,8 +315,8 @@ public class AppContext implements Serializable {
         return app.removeAllFA();
     }
 
-    public boolean removeMentor(String emailMentor) {
-        return app.removeMentor(emailMentor);
+    public boolean removeMentor(String idCodePropOfMentor) {
+        return app.removeMentor(idCodePropOfMentor);
     }
 
     public boolean editNameTeacher(String newName, String email) {
@@ -374,10 +383,6 @@ public class AppContext implements Serializable {
         return app.editCandidatures(newCandidatures, number);
     }
 
-    public boolean editMentor(String newMentor, long number) {
-        return app.editMentor(newMentor, number);
-    }
-
     public List<Student> studentsMentor() {
         return app.studentsMentor();
     }
@@ -386,8 +391,24 @@ public class AppContext implements Serializable {
         return app.studentsNoMentor();
     }
 
-    public boolean mentorAttribution(String[] values) {
-        return app.mentorAttribution(values);
+    public ArrayList<String> getCandidaturesStudentPropCode() {
+        return app.getCandidaturesStudentPropCode();
+    }
+
+    public List<Student> studentsWFA() {
+        return app.studentsWFA();
+    }
+
+    public List<FinalAtribution> proposalsNoMentor(){
+        return app.proposalsNoMentor();
+    }
+
+    public List<FinalAtribution> proposalsWithMentor(){
+        return app.proposalsWithMentor();
+    }
+
+    public boolean mentorAttribution(String idCode, String mentorEmail) {
+        return app.mentorAttribution(idCode, mentorEmail);
     }
 
     public List<Student> noProposalCandidature() {
@@ -450,8 +471,8 @@ public class AppContext implements Serializable {
         return app.editCandidatures(values, number);
     }
 
-    public boolean setMentor(String newMentor, long number) {
-        return app.editMentor(newMentor, number);
+    public boolean setMentor(String newMentor, String idCode) {
+        return app.editMentor(newMentor, idCode);
     }
 
     public FinalAtribution getStudentFA(long number) {
