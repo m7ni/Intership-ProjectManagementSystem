@@ -18,6 +18,7 @@ import pt.isec.pa.ui.gui.utils.ToastMessage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PhaseTwoStateUI  extends BorderPane {
     Facade facade;
@@ -363,10 +364,11 @@ public class PhaseTwoStateUI  extends BorderPane {
         }
 
         StringBuilder sb = new StringBuilder();
+        lvConsultC.getItems().clear();
         for (long c : facade.getCandidatures().keySet()) {
             sb.append("          Student Number [").append(c).append("]");
-            sb.append("          Proposals Codes [").append( facade.getCandidatures().get(c).toString().substring(1,  facade.getCandidatures().get(c).toString().length() - 1)).append("]").append("\n");
-
+            sb.append("          Proposals Codes [").append(facade.getCandidatures().get(c).toString(), 1, facade.getCandidatures().get(c).toString().length() - 1).append("]");
+            lvConsultC.getItems().add(sb.toString());
         }
 
         if (facade.getState() != AppState.PHASE_TWO) {
@@ -376,3 +378,5 @@ public class PhaseTwoStateUI  extends BorderPane {
         this.setVisible(true);
     }
 }
+
+//

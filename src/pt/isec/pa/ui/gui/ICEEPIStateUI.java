@@ -27,7 +27,7 @@ public class ICEEPIStateUI extends BorderPane {
     }
 
     private void createViews() {
-        btnCSVPI = new Button("Load CSV File");
+        btnCSVPI = new Button("Upload CSV File");
         btnCSVPI.setMinWidth(450);
         btnInternshipManagement = new Button("Internships Management");
         btnInternshipManagement.setMinWidth(450);

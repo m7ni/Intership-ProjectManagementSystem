@@ -154,6 +154,180 @@ public class PhaseFourStateUI  extends BorderPane {
     }
 
     private void registerHandlers() {
+        facade.addPropertyChangeListener(evt -> { update(); });
+
+        btnConfirmManualInsert.setOnAction(actionEvent -> {
+            if(cbNameEmailMentor.getValue() == null || cbTitleCodeProposal.getValue() == null){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Alert");
+                alert.setHeaderText(null);
+                alert.setContentText("There are empty fields");
+                alert.showAndWait();
+                clearManualInsert();
+                return;
+            }
+
+            String idCode = null;
+            if(cbTitleCodeProposal.getValue() != null){
+                Label labelresponse = new Label();
+                labelresponse.setText("" + cbTitleCodeProposal.getValue());
+
+                String s = labelresponse.toString();
+
+                String[] values;
+                values = s.split(",");
+                values[1] = values[1].substring(0, values[1].length() - 1);
+                idCode = values[1];
+            }
+
+            String emailMentor = null;
+            if(cbNameEmailMentor.getValue() != null){
+                Label labelresponse = new Label();
+                labelresponse.setText("" + cbNameEmailMentor.getValue());
+
+                String s = labelresponse.toString();
+
+                String[] values;
+                values = s.split(",");
+                values[1] = values[1].substring(0, values[1].length() - 1);
+                emailMentor = values[1];
+            }
+
+            if(!facade.mentorAttribution(idCode, emailMentor)){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Alert");
+                alert.setHeaderText(null);
+                alert.setContentText("There are fields that do not match the requirements");
+                alert.showAndWait();
+                clearManualInsert();
+                return;
+            }
+            clearManualInsert();
+        });
+
+        btnConfirmManualEdit.setOnAction(actionEvent -> {
+            if(cbNameSIDCodePEmailTEdit.getValue() == null && cbNameEmailMentorEdit.getValue() == null){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Alert");
+                alert.setHeaderText(null);
+                alert.setContentText("There are empty fields");
+                alert.showAndWait();
+                clearManualEdit();
+                return;
+            }
+
+            String idCode = null;
+            if(cbNameSIDCodePEmailTEdit.getValue() != null){
+                Label labelresponse = new Label();
+                labelresponse.setText("" + cbNameSIDCodePEmailTEdit.getValue());
+
+                String s = labelresponse.toString();
+
+                String[] values;
+                values = s.split(",");
+                values[1] = values[1].substring(0, values[1].length() - 1);
+                idCode = values[1];
+            }
+
+            String emailMentor = null;
+            if(cbNameEmailMentorEdit.getValue() != null){
+                Label labelresponse = new Label();
+                labelresponse.setText("" + cbNameEmailMentorEdit.getValue());
+
+                String s = labelresponse.toString();
+
+                String[] values;
+                values = s.split(",");
+                values[1] = values[1].substring(0, values[1].length() - 1);
+                emailMentor = values[1];
+            }
+
+            if(!facade.editMentor(emailMentor, idCode)){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Alert");
+                alert.setHeaderText(null);
+                alert.setContentText("There are fields that do not match the requirements");
+                alert.showAndWait();
+                clearManualEdit();
+                return;
+            }
+            clearManualEdit();
+        });
+
+
+        btnConfirmManualInsert.setOnAction(actionEvent -> {
+            facade.automaticMentorPhaseFour();
+            ToastMessage.show(getScene().getWindow(), true);
+        });
+
+        btnPropAttributesMentor.setOnAction(actionEvent -> {
+            lvConsultBtn.getItems().clear();
+            if(facade.studentsMentor().isEmpty())
+                return;
+
+            for(Student s  :  facade.studentsMentor())
+                lvConsultBtn.getItems().add(s.toString());
+        });
+
+        btnPropAttributesNMentor.setOnAction(actionEvent -> {
+            lvConsultBtn.getItems().clear();
+            if(facade.studentsMentor().isEmpty())
+                return;
+
+            for(Student s : facade.studentsNoMentor())
+                lvConsultBtn.getItems().add(s.toString());
+        });
+
+        btnNOrientMentor.setOnAction(actionEvent -> {
+            lvConsultBtn.getItems().clear();
+            StringBuilder sb = new StringBuilder();
+            if(cbtitleCodeMentor.getValue() == null){
+                for(String email : facade.getTeachers().keySet()){
+                    sb.append("Teacher: "+ facade.getTeachers().get(email).toString()).append("\n");
+                    sb.append("Min: "+ facade.mentorByTeacher(email).get(0)).append("\n");
+                    sb.append("Max: "+ facade.mentorByTeacher(email).get(1)).append("\n");
+                    sb.append("Average: "+ facade.mentorByTeacher(email).get(3)).append("\n");
+                    lvConsultBtn.getItems().add(sb.toString());
+                    sb = new StringBuilder();
+                }
+
+            }else{
+                Label labelresponse = new Label();
+                labelresponse.setText("" + cbtitleCodeMentor.getValue());
+
+                String s = labelresponse.toString();
+
+                String[] values;
+                values = s.split(",");
+                values[1] = values[1].substring(0, values[1].length() - 1);
+                String email = values[1];
+
+
+                sb.append("Min: "+ facade.mentorByTeacher(email).get(0)).append("\n");
+                sb.append("Max: "+ facade.mentorByTeacher(email).get(1)).append("\n");
+                sb.append("Teacher: "+ facade.getTeachers().get(email).toString()).append("\n");
+                sb.append("Teacher Count: "+ facade.getTeachers().get(email).getMentorCount()).append("\n");
+                sb.append("Average: "+ facade.mentorByTeacher(email).get(3)).append("\n");
+
+                lvConsultBtn.getItems().add(sb.toString());
+            }
+
+            cbtitleCodeMentor.setValue(null);
+        });
+
+        btnEraseManual.setOnAction(actionEvent -> {
+            if(cbNameSIDCodePEmailTErase.getValue() != null){
+                Label labelresponse = new Label();
+                labelresponse.setText("" + cbNameSIDCodePEmailTErase.getValue());
+
+                String s = labelresponse.toString();
+
+                String[] values;
+                values = s.split(",");
+                facade.removeMentor(values[1]);
+            }
+        });
+
     }
 
     void clearManualInsert() {
@@ -168,6 +342,34 @@ public class PhaseFourStateUI  extends BorderPane {
 
 
     private void update() {
+        if(facade.getBlock(4) == StateBlock.BLOCKED){
+            tabAutomatic.setDisable(true);
+            tabManualErase.setDisable(true);
+            tabManualInsert.setDisable(true);
+        }
+
+        cbTitleCodeProposal.getItems().clear();
+        for (FinalAtribution fa : facade.proposalsNoMentor()) {
+            cbTitleCodeProposal.getItems().add(fa.getStudent().getStudentNumber()+","+fa.getFinalP().getIdCode());
+        }
+
+        cbNameSIDCodePEmailTErase.getItems().clear();
+        cbNameSIDCodePEmailTEdit.getItems().clear();
+        for(FinalAtribution fa : facade.proposalsWithMentor()) {
+            cbNameSIDCodePEmailTErase.getItems().add(fa.getStudent().getName()+","+fa.getFinalP().getIdCode()+","+fa.getMentor().getEmail());
+            cbNameSIDCodePEmailTEdit.getItems().add(fa.getStudent().getName()+","+fa.getFinalP().getIdCode()+","+fa.getMentor().getEmail());
+
+        }
+
+        cbNameEmailMentor.getItems().clear();
+        cbtitleCodeMentor.getItems().clear();
+        cbNameEmailMentorEdit.getItems().clear();
+        for(Teacher t : facade.getTeachers().values()) {
+            cbNameEmailMentor.getItems().add(t.getName()+","+t.getEmail());
+            cbtitleCodeMentor.getItems().add(t.getName()+","+t.getEmail());
+            cbNameEmailMentorEdit.getItems().add(t.getName()+","+t.getEmail());
+        }
+
         if (facade.getState() != AppState.PHASE_FOUR) {
             this.setVisible(false);
             return;

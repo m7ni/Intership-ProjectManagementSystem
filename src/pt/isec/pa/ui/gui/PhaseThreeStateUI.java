@@ -307,6 +307,31 @@ public class PhaseThreeStateUI  extends BorderPane {
     }
 
     private void update() {
+        btnAutomatic2.setDisable(false);
+        if(facade.getBlock(2) == StateBlock.UNLOCKED){
+            btnAutomatic2.setDisable(true);
+        }
+
+        if(facade.getBlock(3) == StateBlock.BLOCKED){
+            tabAutomatic.setDisable(true);
+            tabManualErase.setDisable(true);
+            tabManualInsert.setDisable(true);
+        }
+        cbStudentNumberErase.getItems().clear();
+        for(FinalAtribution fa : facade.getFA()) {
+            cbStudentNumberErase.getItems().add(fa.getFinalP().getIdCode()+","+fa.getStudent().getName()+","+fa.getStudent().getStudentNumber());
+        }
+
+        cbNameNumberStudent.getItems().clear();
+        for(Student s : facade.studentsWOPropAssociated()) {
+            cbNameNumberStudent.getItems().add(s.getName()+","+s.getStudentNumber());
+        }
+
+        cbtitleCodeStudent.getItems().clear();
+        for(Proposals p : facade.getAvailableProposals()) {
+            cbtitleCodeStudent.getItems().add(p.getTitle()+","+p.getIdCode());
+        }
+
         if (facade.getState() != AppState.PHASE_THREE) {
             this.setVisible(false);
             return;

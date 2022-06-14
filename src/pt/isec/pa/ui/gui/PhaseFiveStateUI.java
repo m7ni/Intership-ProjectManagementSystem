@@ -119,6 +119,27 @@ public class PhaseFiveStateUI  extends BorderPane {
         vbConsultS.getChildren().addAll(lbConsultS,lvConsultS,hbBtnConsultS);
         lvConsultS.setEditable(false);
 
+
+        tabGraphics = new Tab("Graphic Visualisation", vbGraphics);
+        tabGraphics.setClosable(false);
+        tabStudents = new Tab("Consult Students", vbConsultS);
+        tabStudents.setClosable(false);
+        tabProposals = new Tab("Consult Proposals"  , vbConsultFilters);
+        tabProposals.setClosable(false);
+        tabMentors = new Tab("Consult Mentors"  , vbConsultBtn);
+        tabMentors.setClosable(false);
+
+
+        TabPane tabPane = new TabPane();
+        tabPane.getTabs().add(tabStudents);
+        tabPane.getTabs().add(tabProposals);
+        tabPane.getTabs().add(tabMentors);
+        tabPane.getTabs().add(tabGraphics);
+
+        VBox VBox = new VBox(tabPane);
+        this.setTop(VBox);
+        VBox.setAlignment(Pos.CENTER);
+    }
     private void registerHandlers() {
         facade.addPropertyChangeListener(evt -> { update(); });
 

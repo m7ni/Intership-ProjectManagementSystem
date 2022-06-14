@@ -135,6 +135,7 @@ public class ICEEStudentStateUI extends BorderPane {
         lvConsult = new ListView();
         vbConsult.getChildren().add(lvConsult);
         lvConsult.setEditable(false);
+        lvConsult.setMinHeight(600);
 
         //Edit Student
         btnConfirmEdit = new Button("Edit");

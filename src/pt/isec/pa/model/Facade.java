@@ -226,8 +226,11 @@ public class Facade implements Serializable, IOriginator {
         return context.exportCSVP34(nametxt, State);
     }
 
-    public void setBlock(int phase) {
+    public List<Proposals> getAvailableProposals() {
+        return context.getAvailableProposals();
+    }
 
+    public void setBlock(int phase) {
         context.setBlock(phase);
         pcs.firePropertyChange(null,null,null);
     }
@@ -249,8 +252,8 @@ public class Facade implements Serializable, IOriginator {
         return context.removeAllFA();
     }
 
-    public boolean removeMentor(String emailMentor) {
-        var ret = context.removeMentor(emailMentor);
+    public boolean removeMentor(String idCodePropOfMentor) {
+        var ret = context.removeMentor(idCodePropOfMentor);
         pcs.firePropertyChange(null,null,null);
         return ret;
     }
@@ -351,12 +354,6 @@ public class Facade implements Serializable, IOriginator {
         return ret;
     }
 
-    public boolean editMentor(String newMentor, long number) {
-        var ret = context.editMentor(newMentor, number);
-        pcs.firePropertyChange(null,null,null);
-        return ret;
-    }
-
     public boolean insertSelpProp(String idCode, long number, String title) {
         var ret = context.insertSelpProp(idCode, number, title);
         pcs.firePropertyChange(null,null,null);
@@ -436,9 +433,9 @@ public class Facade implements Serializable, IOriginator {
         return context.getFA();
     }
 
-    public boolean manualAtribution(String[] values, List<Long> studentsNumber) {
+    public boolean manualAtribution(long studentNumber, String idCode) {
         ct.save();
-        var ret = context.manualAtribution(values, studentsNumber);
+        var ret = context.manualAtribution(studentNumber, idCode);
         pcs.firePropertyChange(null,null,null);
         return ret;
     }
@@ -475,8 +472,28 @@ public class Facade implements Serializable, IOriginator {
         return context.studentsNoMentor();
     }
 
-    public boolean mentorAttribution(String[] values) {
-        var ret = context.mentorAttribution(values);
+    public ArrayList<String> getCandidaturesStudentPropCode() {
+        return context.getCandidaturesStudentPropCode();
+    }
+
+    public List<Student> studentsWFA() {
+        return context.studentsWFA();
+    }
+
+    public boolean setMentor(String newMentor, String idCode) {
+        return context.setMentor(newMentor, idCode);
+    }
+
+    public List<FinalAtribution> proposalsNoMentor(){
+        return context.proposalsNoMentor();
+    }
+
+    public List<FinalAtribution> proposalsWithMentor(){
+        return context.proposalsWithMentor();
+    }
+
+    public boolean mentorAttribution(String idCode, String mentorEmail) {
+        var ret = context.mentorAttribution(idCode, mentorEmail);
         pcs.firePropertyChange(null,null,null);
         return ret;
     }
@@ -566,8 +583,8 @@ public class Facade implements Serializable, IOriginator {
         return context.getStudentFA(number);
     }
 
-    public boolean setMentor(String newMentor, long number) {
-        var ret =context.setMentor(newMentor, number);
+    public boolean editMentor(String newMentor, String idCode) {
+        var ret =context.setMentor(newMentor, idCode);
         pcs.firePropertyChange(null,null,null);
         return ret;
     }

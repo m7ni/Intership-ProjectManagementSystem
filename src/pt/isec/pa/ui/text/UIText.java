@@ -235,9 +235,7 @@
 //
 //    private void UnTieStateUI() {
 //        long studentNumber;
-//
 //        StringBuilder sb = new StringBuilder();
-//
 //
 //        System.out.println("Tied Students\n");
 //        for(Student s : facade.getStudentsTie())
@@ -454,7 +452,6 @@
 //        }
 //    }
 //
-//    /*
 //    private void InsertProj() {
 //        String code = PAInput.readString("Identification Code: ", false);
 //        String branch;
@@ -476,7 +473,8 @@
 //        else
 //            System.out.println("Project successfully added");
 //    }
-//*/
+//
+//
 //
 //    private void InternshipManagementP1() {
 //        switch (PAInput.chooseOption("Internship Management",
@@ -488,7 +486,6 @@
 //            case 4 ->  facade.back();
 //        }
 //    }
-//    /*
 //    private void InsertIntern() {
 //        String code = PAInput.readString("Identification Code: ", false);
 //        String branch;
@@ -510,7 +507,8 @@
 //        else
 //            System.out.println("Internship successfully added");
 //    }
-//*/
+//
+//
 //
 //    private void ICEEStateUITeacher() {
 //        switch (PAInput.chooseOption("Teacher Management",
@@ -721,7 +719,6 @@
 //        return sb.toString();
 //    }
 //
-///*
 //    public String printCSVP1(HashMap<Long, Student> students,HashMap<String, Teacher> teachers,HashMap<String, SelfProposed> selfProp,HashMap<String, Project> projects,HashMap<String, Internship> internships) {
 //        StringBuilder sb = new StringBuilder();
 //        for (Student s : students.values())
@@ -741,7 +738,8 @@
 //
 //        return sb.toString();
 //    }
-//*/
+//
+//
 //    public String printPhaseTwo(HashMap<Long, Student> students,HashMap<String, Teacher> teachers,HashMap<String, SelfProposed> selfProp,HashMap<Long, List<String>> candidatures) {
 //        StringBuilder sb = new StringBuilder();
 //
