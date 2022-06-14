@@ -25,7 +25,6 @@ public class PhaseFourStateUI  extends BorderPane {
     ListView lvConsultBtn;
     Label lbManualErase, lbManual, lbConsultStudents, lbAutomatic, lbManualEdit;
     ChoiceBox  cbNameEmailMentor, cbTitleCodeProposal,cbNameSIDCodePEmailTEdit, cbNameSIDCodePEmailTErase, cbtitleCodeMentor, cbNameEmailMentorEdit;
-    TextField tfManualEdit;
 
     public PhaseFourStateUI(Facade facade) {
         this.facade = facade;
@@ -102,8 +101,6 @@ public class PhaseFourStateUI  extends BorderPane {
         hbBtnManualEdit = new HBox( btnConfirmManualEdit, btnClearManualEdit);
         hbBtnManualEdit.setAlignment(Pos.CENTER);
         hbBtnManualEdit.setSpacing(6);
-        tfManualEdit= new TextField();
-        tfManualEdit.setMaxWidth(200);
         vbManualEdit = new VBox();
         vbManualEdit.setAlignment(Pos.CENTER);
         vbManualEdit.setSpacing(10);
@@ -116,7 +113,7 @@ public class PhaseFourStateUI  extends BorderPane {
         cbNameSIDCodePEmailTEdit = new ChoiceBox<>();
         cbNameEmailMentorEdit = new ChoiceBox<>();
 
-        vbManualEdit.getChildren().addAll(lbManualEdit,cbNameSIDCodePEmailTEdit, cbNameEmailMentorEdit,tfManualEdit, hbBtnManualEdit);
+        vbManualEdit.getChildren().addAll(lbManualEdit,cbNameSIDCodePEmailTEdit, cbNameEmailMentorEdit, hbBtnManualEdit);
 
         //ERASE
         lbManualErase = new Label("Choose the Student's Attribution that you want to erase");
@@ -255,7 +252,7 @@ public class PhaseFourStateUI  extends BorderPane {
         });
 
 
-        btnConfirmManualInsert.setOnAction(actionEvent -> {
+        btnAutomatic1.setOnAction(actionEvent -> {
             facade.automaticMentorPhaseFour();
             ToastMessage.show(getScene().getWindow(), true);
         });
@@ -346,6 +343,7 @@ public class PhaseFourStateUI  extends BorderPane {
             tabAutomatic.setDisable(true);
             tabManualErase.setDisable(true);
             tabManualInsert.setDisable(true);
+            tabManualEdit.setDisable(true);
         }
 
         cbTitleCodeProposal.getItems().clear();

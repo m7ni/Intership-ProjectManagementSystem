@@ -221,6 +221,7 @@ public class AppData implements Serializable {
         else
             internships.get(((Proposals) p).getIdCode()).setHasAssignedStudent(true);
 
+
         studentsWoProposal.remove(chooseStudent.get(0));
         chooseStudent.clear();
     }
@@ -1173,27 +1174,57 @@ public class AppData implements Serializable {
 
     public int getBranchProposalsDA() {
         int i=0;
-        for(FinalAtribution fa : FA)
-            if(fa.getFinalP().getBranch().equals(Branches.DA))
-                i++;
+        for(FinalAtribution fa : FA) {
+            if(fa.getFinalP().getBranch() != null) {
+                if(fa.getFinalP().getBranch().size() == 3) {
+                    i++;
+                } else if(fa.getFinalP().getBranch().size()==2) {
+                    if(fa.getFinalP().getBranch().get(0).equals(Branches.DA))
+                        i++;
+                } else {
+                    if(fa.getFinalP().getBranch().get(0).equals(Branches.DA))
+                        i++;
+                }
+            }
+        }
 
         return i;
     }
 
     public int getBranchProposalsSI() {
         int i=0;
-        for(FinalAtribution fa : FA)
-            if(fa.getFinalP().getBranch().equals(Branches.SI))
-                i++;
+        for(FinalAtribution fa : FA) {
+            if(fa.getFinalP().getBranch() != null) {
+                if(fa.getFinalP().getBranch().size() == 3) {
+                    i++;
+                } else if(fa.getFinalP().getBranch().size()==2) {
+                    if(fa.getFinalP().getBranch().get(0).equals(Branches.SI))
+                        i++;
+                } else {
+                    if(fa.getFinalP().getBranch().get(0).equals(Branches.SI))
+                        i++;
+                }
+            }
+        }
 
         return i;
     }
 
     public int getBranchProposalsRAS() {
         int i=0;
-        for(FinalAtribution fa : FA)
-            if(fa.getFinalP().getBranch().equals(Branches.RAS))
-                i++;
+        for(FinalAtribution fa : FA) {
+            if(fa.getFinalP().getBranch() != null) {
+                if(fa.getFinalP().getBranch().size() == 3) {
+                    i++;
+                } else if(fa.getFinalP().getBranch().size()==2) {
+                    if(fa.getFinalP().getBranch().get(0).equals(Branches.RAS))
+                        i++;
+                } else {
+                    if(fa.getFinalP().getBranch().get(0).equals(Branches.RAS))
+                        i++;
+                }
+            }
+        }
 
         return i;
     }
@@ -1218,6 +1249,30 @@ public class AppData implements Serializable {
             i++;
 
         return i;
+    }
+
+    public ArrayList<Teacher> getMapCountMentor() {
+        ArrayList<Teacher> chooseTeacher= new ArrayList<>();
+        ArrayList<Teacher> aux= new ArrayList<>();
+
+        for(FinalAtribution fa : FA) {
+            if(fa.getMentor() != null) {
+                chooseTeacher.add(fa.getMentor());
+            }
+        }
+
+        chooseTeacher.sort(new SortByMentorCount()); //organized by mentor count
+
+        int i=0;
+        for(Teacher t : chooseTeacher) {
+            aux.add(t);
+
+            i++;
+            if(i==5)
+                break;
+        }
+
+        return aux;
     }
 
 }

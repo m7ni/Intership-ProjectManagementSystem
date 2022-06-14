@@ -1,24 +1,26 @@
 package pt.isec.pa.ui.gui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import pt.isec.pa.model.Facade;
 import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.data.personel.Student;
 import pt.isec.pa.model.data.personel.Teacher;
 import pt.isec.pa.model.data.proposals.Proposals;
 import pt.isec.pa.model.fsm.AppState;
+import pt.isec.pa.model.fsm.Constants;
+
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PhaseFiveStateUI  extends BorderPane {
     Facade facade;
     Tab tabStudents, tabProposals,tabMentors, tabGraphics;
-    VBox vbConsultBtn,vbConsultBtnN,vbGraphics;
+    VBox vbConsultBtn,vbConsultBtnN,vbGraphics, vbspGraphics;
     Label lbConsultStudents;
     HBox hbBtnConsultBTN,hbBtnConsultS;
     ListView lvConsultBtn;
@@ -30,7 +32,8 @@ public class PhaseFiveStateUI  extends BorderPane {
     Button chPropAvailable,chPropNotAvailable,chStudentProp,chStudentNPropWc;
     ListView lvConsultP,lvConsultS;
     ArrayList<Filtros> fl;
-    PieChart pcBranches,pcAtributtesNatributted;
+    PieChart pcBranches,pcAtributtesNatributted, pcMentorCount;
+    ScrollPane spGraphics;
 
     public PhaseFiveStateUI(Facade facade) {
         fl = new ArrayList<>();
@@ -45,17 +48,20 @@ public class PhaseFiveStateUI  extends BorderPane {
         //Graphics
         vbGraphics = new VBox();
         vbGraphics.setSpacing(20);
+        vbGraphics.setAlignment(Pos.CENTER);
         pcBranches = new PieChart();
-        PieChart.Data slice1 = new PieChart.Data("DA", facade.getBranchProposalsDA());
-        PieChart.Data slice2 = new PieChart.Data("RAS", facade.getBranchProposalsRAS());
-        PieChart.Data slice3 = new PieChart.Data("SI"  , facade.getBranchProposalsSI());
-        pcBranches.getData().addAll(slice2,slice1,slice3);
-
+        pcMentorCount = new PieChart();
+        spGraphics = new ScrollPane();
         pcAtributtesNatributted = new PieChart();
-        PieChart.Data slice4 = new PieChart.Data("Atributted Proposals", facade.getNotAvailablePropNumber());
-        PieChart.Data slice5 = new PieChart.Data("Non atributted Proposals", facade.getAvailablePropNumber());
-        pcAtributtesNatributted.getData().addAll(slice4,slice5);
-        vbGraphics.getChildren().addAll(pcBranches,pcAtributtesNatributted);
+        vbspGraphics = new VBox();
+        vbspGraphics.setSpacing(20);
+        vbspGraphics.setAlignment(Pos.CENTER);
+
+        vbGraphics.getChildren().addAll(pcMentorCount,pcBranches,pcAtributtesNatributted);
+
+        spGraphics.setContent(vbGraphics);
+        spGraphics.setMaxHeight(800);
+        vbspGraphics.getChildren().add(spGraphics);
 
         //mentor
         lbConsultStudents = new Label("Choose which group of People you want to see");
@@ -120,7 +126,7 @@ public class PhaseFiveStateUI  extends BorderPane {
         lvConsultS.setEditable(false);
 
 
-        tabGraphics = new Tab("Graphic Visualisation", vbGraphics);
+        tabGraphics = new Tab("Graphic Visualisation", vbspGraphics);
         tabGraphics.setClosable(false);
         tabStudents = new Tab("Consult Students", vbConsultS);
         tabStudents.setClosable(false);
@@ -229,6 +235,61 @@ public class PhaseFiveStateUI  extends BorderPane {
 
     private void update() {
 
+        pcMentorCount.getData().clear();
+        PieChart.Data sliceMentor1;
+        PieChart.Data sliceMentor2;
+        PieChart.Data sliceMentor3;
+        PieChart.Data sliceMentor4;
+        PieChart.Data sliceMentor5;
+        int i=0;
+        if(facade.getState() == AppState.PHASE_FIVE) {
+            for (Teacher t : facade.getMapCountMentor()) {
+                switch (i) {
+                    case 0 -> {
+                        sliceMentor1 = new PieChart.Data(t.getName(), t.getMentorCount());
+                        pcMentorCount.getData().add(sliceMentor1);
+                    }
+                    case 1 -> {
+                        sliceMentor2 = new PieChart.Data(t.getName(), t.getMentorCount());
+                        pcMentorCount.getData().add(sliceMentor2);
+                    }
+                    case 2 -> {
+                        sliceMentor3 = new PieChart.Data(t.getName(), t.getMentorCount());
+                        pcMentorCount.getData().add(sliceMentor3);
+                    }
+                    case 3 -> {
+                        sliceMentor4 = new PieChart.Data(t.getName(), t.getMentorCount());
+                        pcMentorCount.getData().add(sliceMentor4);
+                    }
+                    case 4 -> {
+                        sliceMentor5 = new PieChart.Data(t.getName(), t.getMentorCount());
+                        pcMentorCount.getData().add(sliceMentor5);
+                    }
+                }
+                i++;
+            }
+
+            PieChart.Data slice1 = new PieChart.Data("DA", facade.getBranchProposalsDA());
+            PieChart.Data slice2 = new PieChart.Data("RAS", facade.getBranchProposalsRAS());
+            PieChart.Data slice3 = new PieChart.Data("SI", facade.getBranchProposalsSI());
+            pcBranches.getData().addAll(slice2,slice1,slice3);
+
+
+            PieChart.Data slice4 = new PieChart.Data("Atributted Proposals", facade.getNotAvailablePropNumber());
+            PieChart.Data slice5 = new PieChart.Data("Non atributted Proposals", facade.getAvailablePropNumber());
+            pcAtributtesNatributted.getData().addAll(slice4,slice5);
+        }
+
+        /*
+        if(!facade.getMapCountMentor().isEmpty() && facade.getState() == AppState.PHASE_FIVE) {
+            PieChart.Data sliceMentor1 = new PieChart.Data(facade.getMapCountMentor().get(0).getName(), facade.getMapCountMentor().get(0).getMentorCount());
+            PieChart.Data sliceMentor2 = new PieChart.Data(facade.getMapCountMentor().get(1).getName(), facade.getMapCountMentor().get(1).getMentorCount());
+            PieChart.Data sliceMentor3 = new PieChart.Data(facade.getMapCountMentor().get(2).getName(), facade.getMapCountMentor().get(2).getMentorCount());
+            PieChart.Data sliceMentor4 = new PieChart.Data(facade.getMapCountMentor().get(3).getName(), facade.getMapCountMentor().get(3).getMentorCount());
+            PieChart.Data sliceMentor5 = new PieChart.Data(facade.getMapCountMentor().get(4).getName(), facade.getMapCountMentor().get(4).getMentorCount());
+            pcMentorCount.getData().addAll(sliceMentor1,sliceMentor2,sliceMentor3,sliceMentor4,sliceMentor5);
+        }
+*/
         cbtitleCodeMentor.getItems().clear();
         for(Teacher t : facade.getTeachers().values()) {
             cbtitleCodeMentor.getItems().add(t.getName()+","+t.getEmail());

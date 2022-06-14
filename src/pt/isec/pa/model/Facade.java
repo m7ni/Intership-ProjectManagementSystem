@@ -576,11 +576,12 @@ public class Facade implements Serializable, IOriginator {
         return ret;
     }
 
-
-
-
     public FinalAtribution getStudentFA(long number) {
         return context.getStudentFA(number);
+    }
+
+    public ArrayList<Teacher> getMapCountMentor() {
+        return context.getMapCountMentor();
     }
 
     public boolean editMentor(String newMentor, String idCode) {

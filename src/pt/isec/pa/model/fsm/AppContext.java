@@ -24,7 +24,6 @@ public class AppContext implements Serializable {
         this.state = new ChoosePhaseOne(this,app);
     }
 
-
     public void changeState(IAppState newState) {
         state = newState;
     }
@@ -477,6 +476,10 @@ public class AppContext implements Serializable {
 
     public FinalAtribution getStudentFA(long number) {
         return app.getStudentFA(number);
+    }
+
+    public ArrayList<Teacher> getMapCountMentor() {
+        return app.getMapCountMentor();
     }
 
 }
