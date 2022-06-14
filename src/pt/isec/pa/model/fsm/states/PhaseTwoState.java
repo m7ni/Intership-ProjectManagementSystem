@@ -28,6 +28,10 @@ public class PhaseTwoState extends AppStateAdapter implements Serializable {
     }
 
     @Override
+    public boolean erase(String email) {
+        return data.removeType(email, Types.CANDIDATURE );
+    }
+    @Override
     public boolean next(Boolean block) {
 
         if(block && (data.getBlock(2)== StateBlock.UNLOCKED)){ //wants to block and is not already blocked

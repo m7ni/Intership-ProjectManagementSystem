@@ -41,6 +41,26 @@ public class AppContext implements Serializable {
         state.teacher();
     }
 
+    public int getBranchProposalsDA() {
+        return app.getBranchProposalsDA();
+    }
+
+    public int getAvailablePropNumber() {
+        return app.getAvailablePropNumber();
+    }
+
+    public int getNotAvailablePropNumber() {
+        return app.getNotAvailablePropNumber();
+    }
+
+    public int getBranchProposalsSI() {
+        return app.getBranchProposalsSI();
+    }
+
+    public int getBranchProposalsRAS() {
+        return app.getBranchProposalsRAS();
+    }
+
     public void student(){
         state.student();
     }
@@ -272,26 +292,6 @@ public class AppContext implements Serializable {
 
     public void setBlock(int phase) {
         app.setBlock(phase);
-    }
-
-    public boolean removeStudent(long code) {
-        return app.removeStudent(code);
-    }
-
-    public boolean removeTeacher(String email) {
-        return app.removeTeacher(email);
-    }
-
-    public boolean removeP(String idCode) {
-        return app.removeP(idCode);
-    }
-
-    public boolean removeI(String idCode) {
-        return app.removeI(idCode);
-    }
-
-    public boolean removeSP(String idCode) {
-        return app.removeSP(idCode);
     }
 
     public boolean removeC(long studentNumber) {

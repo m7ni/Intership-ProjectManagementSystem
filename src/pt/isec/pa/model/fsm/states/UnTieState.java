@@ -24,4 +24,8 @@ public class UnTieState extends AppStateAdapter implements Serializable {
         changeState(AppState.UNTIE);
         return true;
     }
+    @Override
+    public String toString() {
+        return "UNTIE";
+    }
 }

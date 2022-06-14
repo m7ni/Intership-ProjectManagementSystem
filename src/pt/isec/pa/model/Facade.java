@@ -30,6 +30,26 @@ public class Facade implements Serializable, IOriginator {
     private MemoryManager mm;
     PropertyChangeSupport pcs;
 
+    public int getBranchProposalsDA() {
+        return context.getBranchProposalsDA();
+    }
+
+    public int getBranchProposalsSI() {
+        return context.getBranchProposalsSI();
+    }
+
+    public int getBranchProposalsRAS() {
+        return context.getBranchProposalsRAS();
+    }
+
+    public int getAvailablePropNumber() {
+        return context.getAvailablePropNumber();
+    }
+
+    public int getNotAvailablePropNumber() {
+        return context.getNotAvailablePropNumber();
+    }
+
     public Facade(AppContext context) {
         this.context = context;
         mm = new MemoryManager();
@@ -210,36 +230,6 @@ public class Facade implements Serializable, IOriginator {
 
         context.setBlock(phase);
         pcs.firePropertyChange(null,null,null);
-    }
-
-    public boolean removeStudent(long code) {
-        var ret = context.removeStudent(code);
-        pcs.firePropertyChange(null,null,null);
-        return ret;
-    }
-
-    public boolean removeTeacher(String email) {
-        var ret = context.removeTeacher(email);
-        pcs.firePropertyChange(null,null,null);
-        return ret;
-    }
-
-    public boolean removeP(String idCode) {
-        var ret = context.removeP(idCode);
-        pcs.firePropertyChange(null,null,null);
-        return ret;
-    }
-
-    public boolean removeI(String idCode) {
-        var ret = context.removeI(idCode);
-        pcs.firePropertyChange(null,null,null);
-        return ret;
-    }
-
-    public boolean removeSP(String idCode) {
-        var ret = context.removeSP(idCode);
-        pcs.firePropertyChange(null,null,null);
-        return ret;
     }
 
     public boolean removeC(long studentNumber) {
@@ -568,6 +558,9 @@ public class Facade implements Serializable, IOriginator {
         pcs.firePropertyChange(null,null,null);
         return ret;
     }
+
+
+
 
     public FinalAtribution getStudentFA(long number) {
         return context.getStudentFA(number);

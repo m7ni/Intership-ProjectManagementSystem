@@ -2,6 +2,7 @@ package pt.isec.pa.model.fsm.states;
 
 import pt.isec.pa.model.data.AppData;
 import pt.isec.pa.model.data.Filtros;
+import pt.isec.pa.model.data.Types;
 import pt.isec.pa.model.data.proposals.Proposals;
 import pt.isec.pa.model.data.StateBlock;
 import pt.isec.pa.model.fsm.AppContext;

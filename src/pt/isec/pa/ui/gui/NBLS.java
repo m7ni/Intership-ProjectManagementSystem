@@ -5,13 +5,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
+
 import pt.isec.pa.model.Facade;
 import pt.isec.pa.model.data.StateBlock;
-import pt.isec.pa.model.fsm.AppState;
-import pt.isec.pa.model.fsm.states.*;
 
-import java.io.File;
 
 
 public class NBLS extends HBox {
@@ -42,18 +39,14 @@ public class NBLS extends HBox {
         btnBack  = new Button("BACK");
         btnBack.setMinWidth(100);
 
-        HBox hBox = new HBox();
-
         this.getChildren().addAll(hb,btnBack,btnSave,btnLoad,btnNext);
         this.setAlignment(Pos.CENTER);
     }
 
     private void registerHandlers() {
-        facade.addPropertyChangeListener(evt -> { update(); });
+        facade.addPropertyChangeListener(evt -> update());
 
-        btnBack.setOnAction(actionEvent -> {
-           facade.back();
-        });
+        btnBack.setOnAction(actionEvent -> facade.back());
 
         btnNext.setOnAction(actionEvent -> {
             int state = 0;
@@ -71,9 +64,7 @@ public class NBLS extends HBox {
                 facade.next(false);
         });
 
-        btnSave.setOnAction(actionEvent -> {
-            facade.save();
-        });
+        btnSave.setOnAction(actionEvent -> facade.save());
     }
 
     private void update() {

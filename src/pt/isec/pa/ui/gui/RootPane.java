@@ -38,15 +38,7 @@ public class RootPane extends BorderPane {
             new UnTieStateUI(facade)
         );
 
-        /*
-        stackPane.setBackground(new Background(new BackgroundImage(
-                ImageManager.getImage("fundo.png"),
-                BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(1,1,true,true,true,false)
-        )));
 
-         */
         this.setBackground(new Background(new BackgroundFill(Constants.getGradientFundo(), CornerRadii.EMPTY, Insets.EMPTY)));
         this.setCenter(stackPane);
 

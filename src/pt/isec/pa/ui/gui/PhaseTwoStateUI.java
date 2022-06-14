@@ -9,8 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import pt.isec.pa.model.Facade;
 import pt.isec.pa.model.data.Filtros;
+import pt.isec.pa.model.data.StateBlock;
 import pt.isec.pa.model.data.personel.Student;
 import pt.isec.pa.model.data.proposals.Proposals;
+import pt.isec.pa.model.data.proposals.SelfProposed;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.ui.gui.utils.ToastMessage;
 
@@ -207,7 +209,7 @@ public class PhaseTwoStateUI  extends BorderPane {
                 String[] values;
                 values = s.split(",");
                 values[1] = values[1].substring(0, values[1].length() - 1);
-                facade.remove(Long.parseLong(values[1]));
+                facade.removeC(Long.parseLong(values[1]));
             }
         });
 
@@ -221,12 +223,40 @@ public class PhaseTwoStateUI  extends BorderPane {
             if(chPropWCandidature.isSelected())
                 fl.add(Filtros.CANDIDATUREPROP);
 
-            if(chPropWCandidature.isSelected())
+            if(chPropWOCandidature.isSelected())
                 fl.add(Filtros.CANDIDATUREWOPROP);
 
             lvConsultFilters.getItems().clear();
             for(Proposals p  : facade.printFiltros(fl))
                 lvConsultFilters.getItems().add(p.toString());
+            fl.clear();
+        });
+
+        btnStudentSelfProp.setOnAction(actionEvent -> {
+            lvConsultS.getItems().clear();
+            if(facade.getSelfProp().values().isEmpty())
+                return;
+
+            for(SelfProposed s  : facade.getSelfProp().values())
+                lvConsultS.getItems().add(facade.getStudents().get(s.getStudentNumber()).toString());
+
+        });
+
+        btnStudentCandidature.setOnAction(actionEvent -> {
+            lvConsultS.getItems().clear();
+            if(facade.getCandidatures().keySet().isEmpty())
+                return;
+
+            for(long c  : facade.getCandidatures().keySet())
+                lvConsultS.getItems().add(facade.getStudents().get(c).toString());
+
+        });
+
+        btnStudenNotCandidature.setOnAction(actionEvent -> {
+            lvConsultS.getItems().clear();
+            for(Student s  : facade.studentsWOCandidature())
+                lvConsultS.getItems().add(s.toString());
+            fl.clear();
         });
 
         btnClearInsert.setOnAction(actionEvent -> {
@@ -238,7 +268,7 @@ public class PhaseTwoStateUI  extends BorderPane {
         });
 
         btnConfirmInsert.setOnAction(actionEvent -> {
-            if(!tfProposals.getText().isBlank() ){
+            if(!tfProposals.getText().isBlank() && cbNameNumberStudent.getValue()!=null){
                 Label labelresponse = new Label();
                 labelresponse.setText("" +cbNameNumberStudent.getValue());
                 String s = labelresponse.toString();
@@ -246,11 +276,10 @@ public class PhaseTwoStateUI  extends BorderPane {
                 String[] values;
                 values = s.split(",");
                 values[1] = values[1].substring(0, values[1].length() - 1);
-                StringBuilder aux = new StringBuilder(values[1]);
-                aux.append(",");
-                aux.append(tfProposals.getText());
+                String aux = values[1] + "," +
+                        tfProposals.getText();
                 String[] sFinal;
-                sFinal = aux.toString().split(",");
+                sFinal = aux.split(",");
 
                 if(!facade.addCandidature(sFinal)){
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -278,7 +307,7 @@ public class PhaseTwoStateUI  extends BorderPane {
                 return;
             }
 
-            if(!tfEdit.getText().isBlank() && cbStudentNumberEdit.getValue() == null){
+            if(!tfEdit.getText().isBlank() && cbStudentNumberEdit.getValue() != null){
                 Label labelresponse = new Label();
                 labelresponse.setText("" +cbStudentNumberEdit.getValue());
                 String s = labelresponse.toString();
@@ -313,6 +342,13 @@ public class PhaseTwoStateUI  extends BorderPane {
     }
 
     private void update() {
+        if(facade.getBlock(2) == StateBlock.BLOCKED){
+            tabUploadCSV.setDisable(true);
+            tabInsert.setDisable(true);
+            tabErase.setDisable(true);
+            tabEdit.setDisable(true);
+        }
+
         cbNameNumberStudent.getItems().clear();
         for(Student  s : facade.studentsWOCandidature()) {
             cbNameNumberStudent.getItems().add(s.getName()+","+s.getStudentNumber().toString());
@@ -323,6 +359,7 @@ public class PhaseTwoStateUI  extends BorderPane {
         for(Student s : facade.studentsWCandidature()) {
             cbStudentNumberEdit.getItems().add(s.getName()+","+s.getStudentNumber().toString());
             cbStudentNumberErase.getItems().add(s.getName()+","+s.getStudentNumber().toString());
+
         }
 
         StringBuilder sb = new StringBuilder();
@@ -331,8 +368,6 @@ public class PhaseTwoStateUI  extends BorderPane {
             sb.append("          Proposals Codes [").append( facade.getCandidatures().get(c).toString().substring(1,  facade.getCandidatures().get(c).toString().length() - 1)).append("]").append("\n");
 
         }
-
-
 
         if (facade.getState() != AppState.PHASE_TWO) {
             this.setVisible(false);

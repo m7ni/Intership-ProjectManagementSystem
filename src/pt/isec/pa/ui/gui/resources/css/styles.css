@@ -54,6 +54,18 @@
     -fx-font-family: Roboto,sans-serif;
     -fx-minx-width: 00;
 }
+#lbTitle {
+    -fx-border-width: 0.2em;
+    -fx-border-style: solid;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 0.12em;
+    -fx-font-weight: 1000;
+    -fx-font-size: 20;
+    -fx-text-fill: purple;
+    -fx-background-color: white;
+    -fx-font-family: Roboto,sans-serif;
+    -fx-minx-width: 00;
+}
 
 #hBoxChoice{
     -fx-border-width: 0.2em;
@@ -86,6 +98,19 @@
     -fx-background-color: transparent;
 }
 
+#buttonf{
+    -fx-padding:0.35em 1.2em;
+    -fx-border-width: 0.2em;
+    -fx-border-style: solid;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 0.12em;
+    -fx-font-family: Roboto,sans-serif;
+    -fx-font-weight: 900;
+    -fx-font-size: 10;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-background-color: transparent;
+}
 #CheckBoxI{
     -fx-text-fill: white;
     -fx-background-color: transparent;

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pt.isec.pa.model.Facade;
+import pt.isec.pa.model.data.StateBlock;
 import pt.isec.pa.model.fsm.AppState;
 
 
@@ -55,6 +56,7 @@ public class ChoosePhaseOneUI extends BorderPane {
     }
 
     private void update() {
+
         if (facade.getState() != AppState.CHOOSE_PHASE_ONE) {
             this.setVisible(false);
             return;

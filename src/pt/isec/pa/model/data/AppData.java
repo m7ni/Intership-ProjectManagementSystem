@@ -258,7 +258,7 @@ public class AppData implements Serializable {
                             result = result.stream().filter(proposalWOCandidature).toList();
                     }
                 }
-                case PHASE_THREE -> {
+                case PHASE_THREE,PHASE_FIVE -> {
                     if(filtros.contains(Filtros.AVAIABLE)){
                         if(result.isEmpty())
                             result = proposalsCombined.stream().filter(avaiableProposal).toList();
@@ -667,6 +667,13 @@ public class AppData implements Serializable {
         }
         return wm;
     }
+    public List<Student> studentsWFA(){
+        List<Student> wm = new ArrayList<>();
+        for(FinalAtribution fa: FA){
+                wm.add(fa.getStudent());
+        }
+        return wm;
+    }
 
     public List<Student> studentsNoMentor(){
         List<Student> nm = new ArrayList<>();
@@ -679,29 +686,39 @@ public class AppData implements Serializable {
 
     public List<Student> studentsWOPropAssociated(){
         List<Student> st = new ArrayList<>();
-        for (Student s : students.values()) {
-            if(!s.isAssignedProposal())
-                st.add(s);
+        HashMap<Long, Student> l = new HashMap<>();
 
+        for(FinalAtribution fa: FA)
+            l.put(fa.getStudent().getStudentNumber(), fa.getStudent());
+
+        for (Student s : students.values()) {
+            if(!l.containsKey(s.getStudentNumber()))
+                st.add(s);
         }
         return st;
     }
 
     public List<Student> studentsSelfPropCandidature(){
         List<Student> st = new ArrayList<>();
-        for (SelfProposed sp : selfProp.values()) {
-            if(students.containsKey(sp.getStudentNumber()))
-                st.add(students.get(sp.getStudentNumber()));
+
+        for(FinalAtribution fa : FA){
+            if(selfProp.containsKey(fa.getFinalP().getIdCode())){
+                if(students.containsKey(selfProp.get(fa.getFinalP().getIdCode()).getStudentNumber()))
+                    st.add(students.get(selfProp.get(fa.getFinalP().getIdCode()).getStudentNumber()));
+            }
         }
+
         return st;
     }
 
     public List<Student> studentsWOCandidature(){
         List<Student> st = new ArrayList<>();
-        for (long c : candidatures.keySet()) {
-            if (!students.containsKey(c))
-                st.add(students.get(c));
+
+        for(long s : students.keySet()){
+            if(!candidatures.containsKey(s))
+                st.add(students.get(s));
         }
+
         return st;
     }
 
@@ -796,46 +813,6 @@ public class AppData implements Serializable {
                aux.add(s);
        }
        return aux;
-    }
-
-    public boolean removeStudent(long code) {
-        if (!students.containsKey(code))
-            return false;
-
-        students.remove(code);
-        return true;
-    }
-
-    public boolean removeTeacher(String email) {
-        if (!teachers.containsKey(email))
-            return false;
-
-        teachers.remove(email);
-        return true;
-    }
-
-    public boolean removeP(String idCode) {
-        if (!projects.containsKey(idCode))
-            return false;
-
-        projects.remove(idCode);
-        return true;
-    }
-
-    public boolean removeI(String idCode) {
-        if (!internships.containsKey(idCode))
-            return false;
-
-        internships.remove(idCode);
-        return true;
-    }
-
-    public boolean removeSP(String idCode) {
-        if (!selfProp.containsKey(idCode))
-            return false;
-
-        teachers.remove(idCode);
-        return true;
     }
 
     public boolean removeC(long studentNumber) {
