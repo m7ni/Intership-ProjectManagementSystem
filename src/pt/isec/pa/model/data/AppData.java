@@ -25,6 +25,54 @@ public class AppData implements Serializable {
     protected Proposals tieProposal;
     protected List<Student> studentsTie;
 
+   transient Predicate<Proposals> selfPropoposal = new Predicate<Proposals>() {
+        @Override
+        public boolean test(Proposals prop) {
+            return prop instanceof SelfProposed;
+        }
+    };
+
+    transient Predicate<Proposals> teacherProposal = new Predicate<Proposals>() {
+        @Override
+        public boolean test(Proposals prop) {
+            return prop instanceof Project;
+        }
+    };
+
+    transient Predicate<Proposals> proposalWCandiddature = new Predicate<Proposals>() {
+        @Override
+        public boolean test(Proposals prop) {
+            for (List<String> l : candidatures.values())
+                if (l.contains(prop.getIdCode()))
+                    return true;
+            return false;
+        }
+    };
+
+    transient Predicate<Proposals> avaiableProposal = new Predicate<Proposals>() {
+        @Override
+        public boolean test(Proposals prop) {
+            return !prop.getHasAssignedStudent();
+        }
+    };
+
+    transient Predicate<Proposals> lockedProposal = new Predicate<Proposals>() {
+        @Override
+        public boolean test(Proposals prop) {
+            return prop.getHasAssignedStudent();
+        }
+    };
+
+    transient Predicate<Proposals> proposalWOCandidature = new Predicate<Proposals>() {
+        @Override
+        public boolean test(Proposals prop) {
+            for (List<String> l : candidatures.values())
+                if (l.contains(prop.getIdCode()))
+                    return false;
+            return true;
+        }
+    };
+
     public AppData() {
         initialize();
     }
@@ -83,54 +131,6 @@ public class AppData implements Serializable {
         students.get(chooseStudent.getStudentNumber()).setAssignedProposal(true);
         FA.add(new FinalAtribution(p,chooseStudent));
     }
-
-    Predicate<Proposals> selfPropoposal = new Predicate<Proposals>() {
-        @Override
-        public boolean test(Proposals prop) {
-            return prop instanceof SelfProposed;
-        }
-    };
-
-    Predicate<Proposals> teacherProposal = new Predicate<Proposals>() {
-        @Override
-        public boolean test(Proposals prop) {
-            return prop instanceof Project;
-        }
-    };
-
-    Predicate<Proposals> proposalWCandiddature = new Predicate<Proposals>() {
-        @Override
-        public boolean test(Proposals prop) {
-            for (List<String> l : candidatures.values())
-                if (l.contains(prop.getIdCode()))
-                    return true;
-            return false;
-        }
-    };
-
-    Predicate<Proposals> avaiableProposal = new Predicate<Proposals>() {
-        @Override
-        public boolean test(Proposals prop) {
-            return !prop.getHasAssignedStudent();
-        }
-    };
-
-    Predicate<Proposals> lockedProposal = new Predicate<Proposals>() {
-        @Override
-        public boolean test(Proposals prop) {
-            return prop.getHasAssignedStudent();
-        }
-    };
-
-    Predicate<Proposals> proposalWOCandidature = new Predicate<Proposals>() {
-        @Override
-        public boolean test(Proposals prop) {
-            for (List<String> l : candidatures.values())
-                if (l.contains(prop.getIdCode()))
-                    return false;
-            return true;
-        }
-    };
 
     public boolean automaticTwoP3Projects() { //automatic distribution of the proposals that are left
         if(getBlock(2)== StateBlock.UNLOCKED)

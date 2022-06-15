@@ -6,10 +6,10 @@ import java.io.*;
 
 public class MemoryManager implements Serializable {
 
-    public boolean save(String fileName, AppContext app){
+    public boolean save(File fl, AppContext app){
         try(ObjectOutputStream oos =
                     new ObjectOutputStream(
-                            new FileOutputStream(fileName)))
+                            new FileOutputStream(fl)))
         {
             oos.writeObject(app);
         } catch (Exception e) {
@@ -18,10 +18,10 @@ public class MemoryManager implements Serializable {
         return false;
     }
 
-    public Boolean load(String fileName, AppContext app){
+    public boolean load(File fl, AppContext app){
         try(ObjectInputStream ois =
                     new ObjectInputStream(
-                            new FileInputStream(fileName)))
+                            new FileInputStream(fl)))
         {
             app =  (AppContext) ois.readObject();
 

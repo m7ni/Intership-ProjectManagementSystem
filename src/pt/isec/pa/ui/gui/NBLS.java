@@ -6,9 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+import javafx.stage.FileChooser;
 import pt.isec.pa.model.Facade;
 import pt.isec.pa.model.data.StateBlock;
+import pt.isec.pa.ui.gui.utils.ToastMessage;
 
+import java.io.File;
 
 
 public class NBLS extends HBox {
@@ -64,7 +67,31 @@ public class NBLS extends HBox {
                 facade.next(false);
         });
 
-        btnSave.setOnAction(actionEvent -> facade.save());
+        btnSave.setOnAction(actionEvent ->{
+            FileChooser fc = new FileChooser();
+            fc.setTitle("File open...");
+            fc.setInitialDirectory(new File("."));
+            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Drawing(*.dat)","*.dat"));
+            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All","*.*"));
+
+            File hFile = fc.showOpenDialog(this.getScene().getWindow());
+
+            ToastMessage.show(getScene().getWindow(), true);
+
+            facade.saveM(hFile);
+        });
+        btnLoad.setOnAction(actionEvent -> {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("File open...");
+            fc.setInitialDirectory(new File("."));
+            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Drawing(*.dat)","*.dat"));
+            fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All","*.*"));
+
+            File hFile = fc.showOpenDialog(this.getScene().getWindow());
+
+            ToastMessage.show(getScene().getWindow(), true);
+            facade.loadM(hFile);
+        });
     }
 
     private void update() {

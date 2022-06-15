@@ -609,11 +609,11 @@ public class Facade implements Serializable, IOriginator {
         ct.reset();
     }
 
-    public boolean saveM(String fileName) {
+    public boolean saveM(File fileName) {
         return mm.save(fileName, context);
     }
 
-    public Boolean loadM(String fileName) {
+    public Boolean loadM(File fileName) {
         return mm.load(fileName, context);
     }
 
