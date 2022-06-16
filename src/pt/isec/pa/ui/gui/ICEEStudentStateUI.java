@@ -20,11 +20,11 @@ public class ICEEStudentStateUI extends BorderPane {
     Tab tabUploadCSV, tabInsert, tabConsult, tabErase, tabEdit;
 
     VBox vbInsert, vbCSV, vbErase, vbConsult, vbEdit;
-    HBox hbMinor, hbInternship, hbBranch, hbBtnInsert, hbBtnEdit, hbMinorEdit, hbInternshipEdit, hbBranchEdit;
+    HBox hbMinor, hbInternship, hbBranch, hbBtnInsert, hbBtnEdit, hbMinorEdit, hbInternshipEdit, hbBranchEdit, hbEditStudentNumber, hbStudentNumberErase;
 
     TextField tfName, tfNumber, tfScore, tfEmail, tfNameEdit, tfScoreEdit, tfEmailEdit;
     ChoiceBox cbMinor, cbInternship, cbBranch, cbNameNumberStudent, cbStudentNumberEdit, cbMinorEdit, cbInternshipEdit, cbBranchEdit;
-    Label lbMinorL, lbInternshipL, lbBranchL, lbEraseL, lbMinorEditL, lbInternshipEditL, lbBranchEditL, lbEditL,lbTitle;
+    Label lbMinorL, lbInternshipL, lbBranchL, lbEraseL, lbMinorEditL, lbInternshipEditL, lbBranchEditL, lbEditL,lbTitle, lbEditStudentNumber, lbStudentNumberErase;
     ListView lvConsult;
 
     long studentNEdit;
@@ -117,6 +117,7 @@ public class ICEEStudentStateUI extends BorderPane {
         //erase
         vbErase = new VBox();
         vbErase.setAlignment(Pos.CENTER);
+        vbErase.setSpacing(10);
 
         btnErase = new Button("Confirm");
         btnErase.setAlignment(Pos.CENTER_RIGHT);
@@ -127,7 +128,16 @@ public class ICEEStudentStateUI extends BorderPane {
         lbEraseL.setAlignment(Pos.CENTER);
 
         cbNameNumberStudent = new ChoiceBox<>();
-        vbErase.getChildren().addAll(lbEraseL, cbNameNumberStudent, btnErase);
+
+        lbStudentNumberErase = new Label("Student\t\t");
+        lbStudentNumberErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberErase = new HBox(lbStudentNumberErase, cbNameNumberStudent);
+
+        hbStudentNumberErase.setAlignment(Pos.CENTER);
+        hbStudentNumberErase.setId(  "hBoxChoice");
+
+        vbErase.getChildren().addAll(lbEraseL, hbStudentNumberErase, btnErase);
 
         //consult
         vbConsult = new VBox();
@@ -149,10 +159,18 @@ public class ICEEStudentStateUI extends BorderPane {
         vbEdit.setSpacing(10);
 
         lbEditL = new Label("Choose the Student that you want to edit");
-        lbEditL.setAlignment(Pos.CENTER_LEFT);
+        lbEditL.setAlignment(Pos.CENTER);
         lbEditL.setId("lbTitle");
         lbEditL.setMinWidth(500);
         cbStudentNumberEdit = new ChoiceBox<>();
+
+        lbEditStudentNumber = new Label("Student Number\t");
+        lbEditStudentNumber.setAlignment(Pos.CENTER_LEFT);
+
+        hbEditStudentNumber = new HBox(lbEditStudentNumber, cbStudentNumberEdit);
+
+        hbEditStudentNumber.setAlignment(Pos.CENTER);
+        hbEditStudentNumber.setId(  "hBoxChoice");
 
         tfNameEdit = new TextField();
         tfNameEdit.setId("tfInsert");
@@ -198,7 +216,7 @@ public class ICEEStudentStateUI extends BorderPane {
         hbBranchEdit.setId(  "hBoxChoice");
         hbInternshipEdit.setId(  "hBoxChoice");
 
-        vbEdit.getChildren().addAll(lbEditL, cbStudentNumberEdit, tfNameEdit, tfEmailEdit, tfScoreEdit, hbMinorEdit, hbBranchEdit, hbInternshipEdit, hbBtnEdit);
+        vbEdit.getChildren().addAll(lbEditL, hbEditStudentNumber, tfNameEdit, tfEmailEdit, tfScoreEdit, hbMinorEdit, hbBranchEdit, hbInternshipEdit, hbBtnEdit);
 
         tabUploadCSV = new Tab("Upload CSV", vbCSV);
         tabUploadCSV.setClosable(false);

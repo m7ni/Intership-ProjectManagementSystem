@@ -20,12 +20,12 @@ public class T1P1StateUI  extends BorderPane {
     Button btnErase, btnConfirmInsert, btnClearInsert, btnConfirmEdit, btnClearEdit;
     Tab tabInsert, tabConsult, tabErase, tabEdit;
     VBox vbInsert, vbErase, vbConsult, vbEdit;
-    HBox hbBranchH, hbBtnInsertH, hbBranchEditH, hbBtnEditH;
+    HBox hbBranchH, hbBtnInsertH, hbBranchEditH, hbBtnEditH, hbStudentNumberInsert, hbStudentNumberEdit, hbInternshipCodeErase, hbInternshipCodeEdit;
     TextField tfId, tfTitle, tfPlace, tfTitleEdit, tfPlaceEdit;
     CheckBox cbRas, cbDa, cbSi, cbRasEdit, cbDaEdit, cbSiEdit;
     ChoiceBox cbAllStudents, cbAllStudentsEdit, cbTitleCodeInternship;
     ListView lvConsult;
-    Label lbEraseL, lbEditL,lbTitle;
+    Label lbEraseL, lbEditL,lbTitle, lbStudentNumberInsert, lbStudentNumberEdit, lbInternshipCodeErase, lbInternshipCodeEdit;
     ChoiceBox cbCodeInternship;
     boolean flag = false;
     String titleCodeInternshipStringEdit = null;
@@ -69,16 +69,26 @@ public class T1P1StateUI  extends BorderPane {
         //erase
         vbErase = new VBox();
         vbErase.setAlignment(Pos.CENTER);
+        vbErase.setSpacing(10);
 
         btnErase = new Button("Confirm");
         btnErase.setAlignment(Pos.CENTER_RIGHT);
 
         lbEraseL = new Label("Choose the Internship that you want to erase");
         lbEraseL.setId("lbTitle");
-        lbEraseL.setMinWidth(300);
+        lbEraseL.setMinWidth(500);
         lbEraseL.setAlignment(Pos.CENTER);
         cbCodeInternship = new ChoiceBox<>();
-        vbErase.getChildren().addAll(lbEraseL, cbCodeInternship, btnErase);
+
+        lbInternshipCodeErase = new Label("Internship Code");
+        lbInternshipCodeErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbInternshipCodeErase = new HBox(lbInternshipCodeErase, cbCodeInternship);
+
+        hbInternshipCodeErase.setAlignment(Pos.CENTER);
+        hbInternshipCodeErase.setId(  "hBoxChoice");
+
+        vbErase.getChildren().addAll(lbEraseL, hbInternshipCodeErase, btnErase);
 
         //consult
         vbConsult = new VBox();
@@ -120,9 +130,17 @@ public class T1P1StateUI  extends BorderPane {
 
         lbEditL = new Label("Choose the Internship that you want to edit");
         lbEditL.setId("lbTitle");
-        lbEditL.setMinWidth(300);
+        lbEditL.setMinWidth(500);
         lbEditL.setAlignment(Pos.CENTER);
         cbTitleCodeInternship = new ChoiceBox<>();
+
+        lbInternshipCodeEdit = new Label("Internship Code");
+        lbInternshipCodeEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbInternshipCodeEdit = new HBox(lbInternshipCodeEdit, cbTitleCodeInternship);
+
+        hbInternshipCodeEdit.setAlignment(Pos.CENTER);
+        hbInternshipCodeEdit.setId(  "hBoxChoice");
 
         tfTitleEdit = new TextField();
         tfTitleEdit.setId("tfInsert");
@@ -148,8 +166,15 @@ public class T1P1StateUI  extends BorderPane {
         hbBranchEditH.getChildren().addAll(cbRasEdit, cbDaEdit, cbSiEdit);
 
         cbAllStudentsEdit = new ChoiceBox<>();
+        lbStudentNumberEdit = new Label("Student\t");
+        lbStudentNumberEdit.setAlignment(Pos.CENTER_LEFT);
 
-        vbEdit.getChildren().addAll(lbEditL, cbTitleCodeInternship, tfTitleEdit, tfPlaceEdit, hbBranchEditH,cbAllStudentsEdit, hbBtnEditH);
+        hbStudentNumberEdit = new HBox(lbStudentNumberEdit, cbAllStudentsEdit);
+
+        hbStudentNumberEdit.setAlignment(Pos.CENTER);
+        hbStudentNumberEdit.setId(  "hBoxChoice");
+
+        vbEdit.getChildren().addAll(lbEditL, hbInternshipCodeEdit, tfTitleEdit, tfPlaceEdit, hbBranchEditH,hbStudentNumberEdit, hbBtnEditH);
 
 
         tabInsert = new Tab("Insert Internship" , vbInsert);
@@ -161,7 +186,15 @@ public class T1P1StateUI  extends BorderPane {
         tabEdit = new Tab("Edit Internship" , vbEdit);
         tabEdit.setClosable(false);
 
-        vbInsert.getChildren().addAll(lbTitle,tfId, tfTitle, tfPlace, hbBranchH, cbAllStudents, hbBtnInsertH);
+        lbStudentNumberInsert = new Label("Student\t");
+        lbStudentNumberInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberInsert = new HBox(lbStudentNumberInsert, cbAllStudents);
+
+        hbStudentNumberInsert.setAlignment(Pos.CENTER);
+        hbStudentNumberInsert.setId(  "hBoxChoice");
+
+        vbInsert.getChildren().addAll(lbTitle,tfId, tfTitle, tfPlace, hbBranchH, hbStudentNumberInsert, hbBtnInsertH);
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(tabInsert);
         tabPane.getTabs().add(tabConsult);
@@ -191,7 +224,7 @@ public class T1P1StateUI  extends BorderPane {
         });
 
         btnConfirmInsert.setOnAction(actionEvent -> {
-            if(tfId.getText().isBlank()|| tfTitle.getText().isBlank() || tfPlace.getText().isBlank() || cbAllStudents.getValue() == null || (!cbRas.isSelected() && !cbDa.isSelected() && !cbSi.isSelected()) ){
+            if(tfId.getText().isBlank()|| tfTitle.getText().isBlank() || tfPlace.getText().isBlank() || (!cbRas.isSelected() && !cbDa.isSelected() && !cbSi.isSelected()) ){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Alert");
                 alert.setHeaderText(null);
@@ -226,7 +259,7 @@ public class T1P1StateUI  extends BorderPane {
                 br.add(Branches.SI);
             }
 
-            if(!facade.addInternship((String) tfId.getText(),number,br,(String) tfTitle.getText(),(String) tfPlace.getText())){
+            if(!facade.addInternship(tfId.getText(),number,br, tfTitle.getText(), tfPlace.getText())){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Alert");
                 alert.setHeaderText(null);

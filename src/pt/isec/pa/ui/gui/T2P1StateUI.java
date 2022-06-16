@@ -22,12 +22,12 @@ public class T2P1StateUI extends BorderPane {
     Button btnErase, btnConfirmInsert, btnClearInsert, btnConfirmEdit, btnClearEdit;
     Tab tabInsert, tabConsult, tabErase, tabEdit;
     VBox vbInsert, vbErase, vbConsult, vbEdit;
-    HBox hbBranch, hbBtnInsert, hbBranchEdit, hbBtnEdit;
+    HBox hbBranch, hbBtnInsert, hbBranchEdit, hbBtnEdit, hbTeacherEmailInsert, hbStudentNumberInsert, hbTeacherEmailEdit, hbStudentNumberEdit, hbProjectCodeErase, hbProjectCodeEdit;
     TextField tfId, tfTitle, tfTitleEdit;
     CheckBox checkBRas, checkBDa, checkBSi, checkBRasEdit, checkBDaEdit, checkBSiEdit;
     ChoiceBox cbBAllStudents, cbAllTeachers, cbTitleCodeProject, cbAllStudentsEdit, cbAllTeachersEdit;
     ListView lvConsult;
-    Label lbErase, lbEdit,lbTitle;
+    Label lbErase, lbEdit,lbTitle, lbTeacherEmailInsert, lbStudentNumberInsert, lbTeacherEmailEdit, lbStudentNumberEdit, lbProjectCodeErase, lbProjectCodeEdit;
     ChoiceBox cbCodeProject;
     boolean flag = false;
     String titleCodeProjectStringEdit = null, emailEdit;
@@ -83,7 +83,25 @@ public class T2P1StateUI extends BorderPane {
         btnErase = new Button("Erase");
 
         cbBAllStudents = new ChoiceBox<>();
+
+        lbStudentNumberInsert = new Label("Student\t");
+        lbStudentNumberInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberInsert = new HBox(lbStudentNumberInsert, cbBAllStudents);
+
+        hbStudentNumberInsert.setAlignment(Pos.CENTER);
+        hbStudentNumberInsert.setId(  "hBoxChoice");
+
+
         cbAllTeachers = new ChoiceBox<>();
+
+        lbTeacherEmailInsert = new Label("Teacher\t");
+        lbTeacherEmailInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbTeacherEmailInsert = new HBox(lbTeacherEmailInsert, cbAllTeachers);
+
+        hbTeacherEmailInsert.setAlignment(Pos.CENTER);
+        hbTeacherEmailInsert.setId(  "hBoxChoice");
 
         //consult
         vbConsult = new VBox();
@@ -95,6 +113,7 @@ public class T2P1StateUI extends BorderPane {
         //erase
         vbErase = new VBox();
         vbErase.setAlignment(Pos.CENTER);
+        vbErase.setSpacing(10);
 
         btnErase = new Button("Confirm");
         btnErase.setAlignment(Pos.CENTER_RIGHT);
@@ -104,7 +123,16 @@ public class T2P1StateUI extends BorderPane {
         lbErase.setMinWidth(500);
         lbErase.setAlignment(Pos.CENTER);
         cbCodeProject = new ChoiceBox<>();
-        vbErase.getChildren().addAll(lbErase, cbCodeProject, btnErase);
+
+        lbProjectCodeErase = new Label("Project Code");
+        lbProjectCodeErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbProjectCodeErase = new HBox(lbProjectCodeErase, cbCodeProject);
+
+        hbProjectCodeErase.setAlignment(Pos.CENTER);
+        hbProjectCodeErase.setId(  "hBoxChoice");
+
+        vbErase.getChildren().addAll(lbErase, hbProjectCodeErase, btnErase);
 
         //Edit Project
         btnConfirmEdit = new Button("Edit");
@@ -122,6 +150,14 @@ public class T2P1StateUI extends BorderPane {
         lbEdit.setMinWidth(500);
         lbEdit.setAlignment(Pos.CENTER);
         cbTitleCodeProject = new ChoiceBox<>();
+
+        lbProjectCodeEdit = new Label("Project Code");
+        lbProjectCodeEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbProjectCodeEdit = new HBox(lbProjectCodeEdit, cbTitleCodeProject);
+
+        hbProjectCodeEdit.setAlignment(Pos.CENTER);
+        hbProjectCodeEdit.setId(  "hBoxChoice");
 
         tfTitleEdit = new TextField();
         tfTitleEdit.setId("tfInsert");
@@ -141,9 +177,27 @@ public class T2P1StateUI extends BorderPane {
         hbBranchEdit.getChildren().addAll(checkBRasEdit, checkBDaEdit, checkBSiEdit);
 
         cbAllTeachersEdit = new ChoiceBox<>();
+
+        lbTeacherEmailEdit = new Label("Teacher\t");
+        lbTeacherEmailEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbTeacherEmailEdit = new HBox(lbTeacherEmailEdit, cbAllTeachersEdit);
+
+        hbTeacherEmailEdit.setAlignment(Pos.CENTER);
+        hbTeacherEmailEdit.setId(  "hBoxChoice");
+
+
         cbAllStudentsEdit = new ChoiceBox<>();
 
-        vbEdit.getChildren().addAll(lbEdit, cbTitleCodeProject, tfTitleEdit, cbAllTeachersEdit, cbAllStudentsEdit, hbBranchEdit, hbBtnEdit);
+        lbStudentNumberEdit = new Label("Student\t");
+        lbStudentNumberEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberEdit = new HBox(lbStudentNumberEdit, cbAllStudentsEdit);
+
+        hbStudentNumberEdit.setAlignment(Pos.CENTER);
+        hbStudentNumberEdit.setId(  "hBoxChoice");
+
+        vbEdit.getChildren().addAll(lbEdit, hbProjectCodeEdit, tfTitleEdit, hbTeacherEmailEdit, hbStudentNumberEdit, hbBranchEdit, hbBtnEdit);
 
 
         tabInsert = new Tab("Insert Project" , vbInsert);
@@ -155,7 +209,7 @@ public class T2P1StateUI extends BorderPane {
         tabEdit = new Tab("Edit Project" , vbEdit);
         tabEdit.setClosable(false);
 
-        vbInsert.getChildren().addAll(lbTitle, tfId, tfTitle, hbBranch, cbAllTeachers, cbBAllStudents, hbBtnInsert);
+        vbInsert.getChildren().addAll(lbTitle, tfId, tfTitle, hbBranch, hbTeacherEmailInsert, hbStudentNumberInsert, hbBtnInsert);
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(tabInsert);
         tabPane.getTabs().add(tabConsult);
@@ -192,7 +246,7 @@ public class T2P1StateUI extends BorderPane {
 
         btnConfirmInsert.setOnAction(actionEvent -> {
 
-            if(tfId.getText().isBlank() || tfTitle.getText().isBlank() || cbBAllStudents.getValue() == null || (!checkBRas.isSelected() && !checkBDa.isSelected() && !checkBSi.isSelected())){
+            if(tfId.getText().isBlank() || tfTitle.getText().isBlank() || (!checkBRas.isSelected() && !checkBDa.isSelected() && !checkBSi.isSelected())){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Alert");
                 alert.setHeaderText(null);

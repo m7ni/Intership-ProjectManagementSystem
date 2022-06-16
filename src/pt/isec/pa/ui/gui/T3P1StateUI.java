@@ -17,11 +17,11 @@ public class T3P1StateUI  extends BorderPane {
     TextField id,title, titleEdit;
     Button btnErase, btnConfirmInsert, btnClearInsert, btnConfirmEdit, btnClearEdit;
     VBox vbInsert, vbErase, vbConsult, vbEdit;
-    HBox hbBtnInsertH, hbBtnEditH;
+    HBox hbBtnInsertH, hbBtnEditH, hbStudentNumberInsert, hbSelfPropCodeErase, hbSelfPropCodeEdit;
     Tab tabInsert, tabConsult, tabErase, tabEdit;
     ChoiceBox cbAllStudents, cbTitleCodeSelfProp;
     ListView lvConsult;
-    Label lbEraseL, lbEditL,lbTitle;
+    Label lbEraseL, lbEditL,lbTitle, lbStudentNumberInsert, lbSelfPropCodeErase, lbSelfPropCodeEdit;
     ChoiceBox CbcodeSelfProp;
     boolean flag = false;
     String titleCodeSelfPropStringEdit = null;
@@ -48,6 +48,7 @@ public class T3P1StateUI  extends BorderPane {
         //erase
         vbErase = new VBox();
         vbErase.setAlignment(Pos.CENTER);
+        vbErase.setSpacing(10);
 
         btnErase = new Button("Confirm");
         btnErase.setAlignment(Pos.CENTER_RIGHT);
@@ -58,7 +59,16 @@ public class T3P1StateUI  extends BorderPane {
         lbEraseL.setAlignment(Pos.CENTER);
 
         CbcodeSelfProp = new ChoiceBox<>();
-        vbErase.getChildren().addAll(lbEraseL, CbcodeSelfProp, btnErase);
+
+        lbSelfPropCodeErase = new Label("Self-Proposal Code");
+        lbSelfPropCodeErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbSelfPropCodeErase = new HBox(lbSelfPropCodeErase, CbcodeSelfProp);
+
+        hbSelfPropCodeErase.setAlignment(Pos.CENTER);
+        hbSelfPropCodeErase.setId(  "hBoxChoice");
+
+        vbErase.getChildren().addAll(lbEraseL, hbSelfPropCodeErase, btnErase);
 
 
         lbTitle = new Label("Insert the SelfPop Data");
@@ -77,6 +87,14 @@ public class T3P1StateUI  extends BorderPane {
         title.setPromptText("Title");
         title.setMaxWidth(150);
         cbAllStudents = new ChoiceBox<>();
+
+        lbStudentNumberInsert = new Label("Student\t");
+        lbStudentNumberInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberInsert = new HBox(lbStudentNumberInsert, cbAllStudents);
+
+        hbStudentNumberInsert.setAlignment(Pos.CENTER);
+        hbStudentNumberInsert.setId(  "hBoxChoice");
 
         vbConsult = new VBox();
         vbConsult.setAlignment(Pos.CENTER);
@@ -103,13 +121,21 @@ public class T3P1StateUI  extends BorderPane {
         lbEditL.setAlignment(Pos.CENTER);
         cbTitleCodeSelfProp = new ChoiceBox<>();
 
+        lbSelfPropCodeEdit = new Label("Self-Proposal Code");
+        lbSelfPropCodeEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbSelfPropCodeEdit = new HBox(lbSelfPropCodeEdit, cbTitleCodeSelfProp);
+
+        hbSelfPropCodeEdit.setAlignment(Pos.CENTER);
+        hbSelfPropCodeEdit.setId(  "hBoxChoice");
+
         titleEdit = new TextField();
         titleEdit.setId("tfInsert");
         titleEdit.setFont(Constants.getNormalFont());
         titleEdit.setPromptText("Title");
         titleEdit.setMaxWidth(150);
 
-        vbEdit.getChildren().addAll(lbEditL, cbTitleCodeSelfProp,titleEdit, hbBtnEditH);
+        vbEdit.getChildren().addAll(lbEditL, hbSelfPropCodeEdit,titleEdit, hbBtnEditH);
 
 
         tabInsert = new Tab("Insert SelProp" , vbInsert);
@@ -122,7 +148,7 @@ public class T3P1StateUI  extends BorderPane {
         tabEdit.setClosable(false);
 
 
-        vbInsert.getChildren().addAll(lbTitle,id,title, cbAllStudents, hbBtnInsertH);
+        vbInsert.getChildren().addAll(lbTitle,id,title, hbStudentNumberInsert, hbBtnInsertH);
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(tabInsert);
         tabPane.getTabs().add(tabConsult);

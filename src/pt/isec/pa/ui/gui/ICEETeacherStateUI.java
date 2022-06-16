@@ -19,11 +19,11 @@ import java.io.File;
 public class ICEETeacherStateUI  extends BorderPane {
     Facade facade;
     Button btnUploadCSV, btnErase, btnConfirmInsert, btnClearInsert, btnConfirmEdit, btnClearEdit;
-    Label lbTitle, lbErase, lbEdit,lbTitleI;
+    Label lbErase, lbEdit,lbTitleI, lbTeacherEmailEdit, lbTeacherEmailErase;
     Tab tabUploadCSV, tabInsert, tabConsult, tabErase, tabEdit;
     ChoiceBox cbNameEmailTeacher, cbEmailTeacherEdit;
     VBox vbInsert, vbCSVBox, vberase, vbConsult, vbEdit;
-    HBox hbMinorH, hbInternshipH, hbBranchH, hbBtnInsertH, hbBtnEditH;
+    HBox hbBtnInsertH, hbBtnEditH, hbTeacherEmailEdit, hbTeacherEmailErase;
     TextField tfName, tfEmail, tfNameEdit, tfEmailEdit;
     ListView lvConsult;
     boolean flag = false;
@@ -77,6 +77,7 @@ public class ICEETeacherStateUI  extends BorderPane {
         //erase
         vberase = new VBox();
         vberase.setAlignment(Pos.CENTER);
+        vberase.setSpacing(10);
 
         btnErase = new Button("Confirm");
         btnErase.setAlignment(Pos.CENTER_RIGHT);
@@ -87,7 +88,16 @@ public class ICEETeacherStateUI  extends BorderPane {
         lbErase.setMinWidth(500);
         lbErase.setAlignment(Pos.CENTER);
         cbNameEmailTeacher = new ChoiceBox<>();
-        vberase.getChildren().addAll(lbErase, cbNameEmailTeacher, btnErase);
+
+        lbTeacherEmailErase = new Label("Teacher\t");
+        lbTeacherEmailErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbTeacherEmailErase = new HBox(lbTeacherEmailErase, cbNameEmailTeacher);
+
+        hbTeacherEmailErase.setAlignment(Pos.CENTER);
+        hbTeacherEmailErase.setId(  "hBoxChoice");
+
+        vberase.getChildren().addAll(lbErase, hbTeacherEmailErase, btnErase);
 
         //consult
         vbConsult = new VBox();
@@ -120,7 +130,15 @@ public class ICEETeacherStateUI  extends BorderPane {
         tfNameEdit.setPromptText("Teacher Name");
         tfNameEdit.setMaxWidth(150);
 
-        vbEdit.getChildren().addAll(lbEdit, cbEmailTeacherEdit, tfNameEdit, hbBtnEditH);
+        lbTeacherEmailEdit = new Label("Teacher\t");
+        lbTeacherEmailEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbTeacherEmailEdit = new HBox(lbTeacherEmailEdit, cbEmailTeacherEdit);
+
+        hbTeacherEmailEdit.setAlignment(Pos.CENTER);
+        hbTeacherEmailEdit.setId(  "hBoxChoice");
+
+        vbEdit.getChildren().addAll(lbEdit, hbTeacherEmailEdit, tfNameEdit, hbBtnEditH);
 
         tabUploadCSV = new Tab("Upload CSV", vbCSVBox);
         tabUploadCSV.setClosable(false);

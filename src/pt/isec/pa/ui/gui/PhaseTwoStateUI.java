@@ -26,11 +26,11 @@ public class PhaseTwoStateUI  extends BorderPane {
     Button btnUploadCSV, btnConfirmInsert, btnClearInsert, btnConfirmEdit, btnClearEdit,btnConfirmConsultFilters;
     Button btnStudentSelfProp, btnStudentCandidature, btnStudenNotCandidature,btnEraseCandidature;
     VBox vbInsert, vbCSV, vbErase, vbConsultC,vbConsultS,vbConsultFilters, vbEdit;
-    HBox hbCandidatureFilters, hbBtnInsert, hbBtnEdit, hbConsultStudents;
+    HBox hbCandidatureFilters, hbBtnInsert, hbBtnEdit, hbConsultStudents, hbInsertStudentNumber, hbEditStudentNumber, hbStudentNumberErase;
     ChoiceBox cbNameNumberStudent, cbStudentNumberEdit,cbStudentNumberErase;
     TextField tfProposals,tfEdit;
     ListView lvConsultC,lvConsultS,lvConsultFilters;
-    Label lbEdit, lbInsert,lbErase,lbConsultProject,lbConsultStudents;
+    Label lbEdit, lbInsert,lbErase,lbConsultProject,lbConsultStudents, lbInsertStudentNumber, lbInsertCandidaturesCode, lbEditStudentNumber, lbEditCandidaturesCode, lbStudentNumberErase;
     CheckBox chSelfProp,chTeachersProp, chPropWCandidature, chPropWOCandidature;
     ArrayList<Filtros> fl;
     public PhaseTwoStateUI(Facade facade) {
@@ -58,8 +58,17 @@ public class PhaseTwoStateUI  extends BorderPane {
         vbErase.setSpacing(5);
         vbErase.setAlignment(Pos.CENTER);
         cbStudentNumberErase = new ChoiceBox<>();
+
+        lbStudentNumberErase = new Label("Student\t");
+        lbStudentNumberErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberErase = new HBox(lbStudentNumberErase, cbStudentNumberErase);
+
+        hbStudentNumberErase.setAlignment(Pos.CENTER);
+        hbStudentNumberErase.setId(  "hBoxChoice");
+
         btnEraseCandidature = new Button("Erase");
-        vbErase.getChildren().addAll(lbErase,cbStudentNumberErase,btnEraseCandidature);
+        vbErase.getChildren().addAll(lbErase,hbStudentNumberErase,btnEraseCandidature);
 
         //Insert
         lbInsert = new Label("Choose the student you want to " +
@@ -78,10 +87,21 @@ public class PhaseTwoStateUI  extends BorderPane {
         vbInsert.setAlignment(Pos.CENTER);
         vbInsert.setSpacing(10);
 
+        lbInsertCandidaturesCode = new Label("Proposals` code");
+        lbInsertCandidaturesCode.setAlignment(Pos.CENTER);
+
+        lbInsertStudentNumber = new Label("Student\t\t");
+        lbInsertStudentNumber.setAlignment(Pos.CENTER_LEFT);
+
         cbNameNumberStudent = new ChoiceBox<>();
+        hbInsertStudentNumber = new HBox(lbInsertStudentNumber, cbNameNumberStudent);
+
+        hbInsertStudentNumber.setAlignment(Pos.CENTER);
+        hbInsertStudentNumber.setId(  "hBoxChoice");
+
         tfProposals= new TextField();
         tfProposals.setMaxWidth(200);
-        vbInsert.getChildren().addAll(lbInsert,cbNameNumberStudent,tfProposals,hbBtnInsert);
+        vbInsert.getChildren().addAll(lbInsert,hbInsertStudentNumber,lbInsertCandidaturesCode,tfProposals,hbBtnInsert);
 
         //consult Candidature
         vbConsultC = new VBox();
@@ -152,7 +172,18 @@ public class PhaseTwoStateUI  extends BorderPane {
         lbEdit.setMinWidth(500);
         cbStudentNumberEdit = new ChoiceBox<>();
 
-        vbEdit.getChildren().addAll(lbEdit, cbStudentNumberEdit,tfEdit, hbBtnEdit);
+        lbEditCandidaturesCode = new Label("Proposals` code");
+        lbEditCandidaturesCode.setAlignment(Pos.CENTER);
+
+        lbEditStudentNumber = new Label("Student\t\t");
+        lbEditStudentNumber.setAlignment(Pos.CENTER_LEFT);
+
+        hbEditStudentNumber = new HBox(lbEditStudentNumber, cbStudentNumberEdit);
+
+        hbEditStudentNumber.setAlignment(Pos.CENTER);
+        hbEditStudentNumber.setId(  "hBoxChoice");
+
+        vbEdit.getChildren().addAll(lbEdit, hbEditStudentNumber,lbEditCandidaturesCode,tfEdit, hbBtnEdit);
 
         tabUploadCSV = new Tab("Upload CSV", vbCSV);
         tabUploadCSV.setClosable(false);
