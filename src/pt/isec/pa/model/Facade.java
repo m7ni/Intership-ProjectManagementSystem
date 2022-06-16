@@ -14,7 +14,7 @@ import pt.isec.pa.model.fsm.AppContext;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.model.fsm.IAppState;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 
@@ -264,6 +264,7 @@ public class Facade implements Serializable, IOriginator {
         ct.reset();
     }
 
+    /*
     public boolean saveM(String fileName) {
         return mm.save(fileName, context);
     }
@@ -272,6 +273,34 @@ public class Facade implements Serializable, IOriginator {
         return mm.load(fileName, context);
     }
 
+
+     */
+
+    public boolean saveM(String fileName){
+        try(ObjectOutputStream oos =
+                    new ObjectOutputStream(
+                            new FileOutputStream(fileName)))
+        {
+            oos.writeObject(context);
+        } catch (Exception e) {
+            System.err.println("Error saving data " + e );
+        }
+        return false;
+    }
+
+    public Boolean loadM(String fileName){
+        try(ObjectInputStream ois =
+                    new ObjectInputStream(
+                            new FileInputStream(fileName)))
+        {
+            context =  (AppContext) ois.readObject();
+
+        } catch (Exception e) {
+            System.err.println("Error loading data" + e);
+        }
+        return false;
+    }
+    
     public boolean hasUndo() {
         return ct.hasUndo();
     }

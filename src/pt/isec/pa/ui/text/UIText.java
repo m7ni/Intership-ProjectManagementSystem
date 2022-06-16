@@ -384,7 +384,7 @@ public class UIText {
                 case 1 -> facade.student();
                 case 2 -> facade.teacher();
                 case 3 -> facade.projectInternship();
-                case 4 -> facade.loadM("load.dat");
+                case 4 -> facade.loadM("save.dat");
                 case 5 -> facade.saveM("save.dat");
                 case 6 -> {
                     if (!facade.next(blockUI()))

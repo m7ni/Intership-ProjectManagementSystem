@@ -12,7 +12,7 @@ public class Student extends Person {
     private Double score;
     private Boolean internship;  //true if the student is able to access internships
     private ArrayList<String> proposals;
-    private boolean assignedProposal; //true if a self-prop, project or internship  is submitted with this student's number
+    private Boolean assignedProposal; //true if a self-prop, project or internship  is submitted with this student's number
 
     public boolean isAssignedProposal() {
         return assignedProposal;

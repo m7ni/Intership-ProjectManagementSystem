@@ -13,7 +13,7 @@ public class MemoryManager implements Serializable {
         {
             oos.writeObject(app);
         } catch (Exception e) {
-            System.err.println("Error saving data");
+            System.err.println("Error saving data " + e );
         }
         return false;
     }
@@ -26,7 +26,7 @@ public class MemoryManager implements Serializable {
             app =  (AppContext) ois.readObject();
 
         } catch (Exception e) {
-            System.err.println("Error loading data");
+            System.err.println("Error loading data" + e);
         }
         return false;
     }

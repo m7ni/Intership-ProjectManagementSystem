@@ -6,6 +6,7 @@ import pt.isec.pa.model.data.personel.Teacher;
 import java.io.Serializable;
 
 public class FinalAtribution implements Serializable {
+    static final long serialVersionUID = 100L;
     private Teacher mentor;
     private Proposals finalP;
     private Student student;

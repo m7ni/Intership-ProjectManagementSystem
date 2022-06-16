@@ -15,14 +15,14 @@ public class AppData implements Serializable {
     static final long serialVersionUID = 100L;
     protected HashMap<Long, Student> students;
     protected HashMap<String, Teacher> teachers;
-    protected HashMap<String, SelfProposed> selfProp;
-    protected HashMap<String, Project> projects;
+     protected HashMap<String, SelfProposed> selfProp;
+     protected HashMap<String, Project> projects;
     protected HashMap<String, Internship> internships;
-    protected HashMap<Long, List<String>> candidatures; //student number + aplications
-    protected List<StateBlock> block;
+     protected HashMap<Long, List<String>> candidatures; //student number + aplications
+     protected List<StateBlock> block;
     protected List<FinalAtribution> FA;
-    protected Proposals tieProposal;
-    protected List<Student> studentsTie;
+     protected Proposals tieProposal;
+     protected List<Student> studentsTie;
     
     public AppData() {
         initialize();
@@ -76,21 +76,21 @@ public class AppData implements Serializable {
         FA.add(new FinalAtribution(p,chooseStudent));
     }
 
-    Predicate<Proposals> selfPropoposal = new Predicate<Proposals>() {
+   transient Predicate<Proposals> selfPropoposal = new Predicate<Proposals>() {
         @Override
         public boolean test(Proposals prop) {
             return prop instanceof SelfProposed;
         }
     };
 
-    Predicate<Proposals> teacherProposal = new Predicate<Proposals>() {
+    transient Predicate<Proposals> teacherProposal = new Predicate<Proposals>() {
         @Override
         public boolean test(Proposals prop) {
             return prop instanceof Project;
         }
     };
 
-    Predicate<Proposals> proposalWCandiddature = new Predicate<Proposals>() {
+    transient Predicate<Proposals> proposalWCandiddature = new Predicate<Proposals>() {
         @Override
         public boolean test(Proposals prop) {
             for (List<String> l : candidatures.values())
@@ -100,21 +100,21 @@ public class AppData implements Serializable {
         }
     };
 
-    Predicate<Proposals> avaiableProposal = new Predicate<Proposals>() {
+    transient Predicate<Proposals> avaiableProposal = new Predicate<Proposals>() {
         @Override
         public boolean test(Proposals prop) {
             return !prop.getHasAssignedStudent();
         }
     };
 
-    Predicate<Proposals> lockedProposal = new Predicate<Proposals>() {
+    transient Predicate<Proposals> lockedProposal = new Predicate<Proposals>() {
         @Override
         public boolean test(Proposals prop) {
             return prop.getHasAssignedStudent();
         }
     };
 
-    Predicate<Proposals> proposalWOCandidature = new Predicate<Proposals>() {
+    transient Predicate<Proposals> proposalWOCandidature = new Predicate<Proposals>() {
         @Override
         public boolean test(Proposals prop) {
             for (List<String> l : candidatures.values())
