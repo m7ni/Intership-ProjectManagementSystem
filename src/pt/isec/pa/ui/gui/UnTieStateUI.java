@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.model.Facade;
 import pt.isec.pa.model.data.personel.Student;
@@ -13,7 +14,8 @@ import pt.isec.pa.model.fsm.AppState;
 public class UnTieStateUI  extends BorderPane {
     Facade facade;
     VBox vbUntie;
-    Label lbTitle, lbTIE;
+    HBox hbStudentNumberTie;
+    Label lbTitle, lbTIE, lbStudentNumberTie;
     ChoiceBox cbStudents;
     Button btnConfirm;
 
@@ -42,7 +44,16 @@ public class UnTieStateUI  extends BorderPane {
         lbTIE.setMinWidth(300);
         btnConfirm = new Button("Confirm");
         cbStudents = new ChoiceBox<>();
-        vbUntie.getChildren().addAll(lbTitle, lbTIE,cbStudents,btnConfirm);
+
+        lbStudentNumberTie = new Label("Student\t");
+        lbStudentNumberTie.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberTie = new HBox(lbStudentNumberTie, cbStudents);
+
+        hbStudentNumberTie.setAlignment(Pos.CENTER);
+        hbStudentNumberTie.setId(  "hBoxChoice");
+
+        vbUntie.getChildren().addAll(lbTitle, lbTIE,hbStudentNumberTie,btnConfirm);
         this.setCenter(vbUntie);
     }
 

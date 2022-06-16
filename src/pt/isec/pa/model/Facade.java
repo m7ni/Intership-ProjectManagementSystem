@@ -6,7 +6,6 @@ import pt.isec.pa.model.data.memento.CareTaker;
 import pt.isec.pa.model.data.memento.IMemento;
 import pt.isec.pa.model.data.memento.IOriginator;
 import pt.isec.pa.model.data.memento.Memento;
-import pt.isec.pa.model.memory.MemoryManager;
 import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.data.StateBlock;
 import pt.isec.pa.model.data.personel.Student;
@@ -18,8 +17,7 @@ import pt.isec.pa.model.fsm.IAppState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +25,6 @@ import java.util.List;
 public class Facade implements Serializable, IOriginator {
     private AppContext context;
     private CareTaker ct;
-    private MemoryManager mm;
     PropertyChangeSupport pcs;
 
     public int getBranchProposalsDA() {
@@ -52,7 +49,6 @@ public class Facade implements Serializable, IOriginator {
 
     public Facade(AppContext context) {
         this.context = context;
-        mm = new MemoryManager();
         ct = new CareTaker(this);
         pcs = new PropertyChangeSupport(this);
     }
@@ -609,12 +605,31 @@ public class Facade implements Serializable, IOriginator {
         ct.reset();
     }
 
-    public boolean saveM(File fileName) {
-        return mm.save(fileName, context);
+    public boolean saveM(File fl){
+        try(ObjectOutputStream oos =
+                    new ObjectOutputStream(
+                            new FileOutputStream(fl)))
+        {
+            oos.writeObject(context);
+        } catch (Exception e) {
+            System.err.println("Error saving data");
+        }
+        return false;
     }
 
-    public Boolean loadM(File fileName) {
-        return mm.load(fileName, context);
+    public boolean loadM(File fl){
+        try(ObjectInputStream ois =
+                    new ObjectInputStream(
+                            new FileInputStream(fl)))
+        {
+            var ret =(AppContext) ois.readObject();
+            pcs.firePropertyChange(null,null,null);
+            context =  ret;
+
+        } catch (Exception e) {
+            System.err.println("Error loading data");
+        }
+        return false;
     }
 
     public boolean hasUndo() {

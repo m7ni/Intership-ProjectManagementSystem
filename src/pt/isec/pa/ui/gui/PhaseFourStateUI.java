@@ -6,7 +6,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.model.Facade;
-import pt.isec.pa.model.data.Filtros;
 import pt.isec.pa.model.data.StateBlock;
 import pt.isec.pa.model.data.personel.Student;
 import pt.isec.pa.model.data.personel.Teacher;
@@ -14,17 +13,15 @@ import pt.isec.pa.model.data.proposals.FinalAtribution;
 import pt.isec.pa.model.fsm.AppState;
 import pt.isec.pa.ui.gui.utils.ToastMessage;
 
-import java.util.ArrayList;
-
 public class PhaseFourStateUI  extends BorderPane {
     Facade facade;
     Tab tabAutomatic, tabManualInsert, tabManualEdit, tabManualErase, tabConsultBtn;
     VBox vbAutomatic, vbManualInsert, vbManualEdit, vbManualErase,  vbConsultBtn,vbConsultBtnN;
-    HBox hbBtnInsert, hbBtnConsultBTN,hbBtnAutomatic, hbBtnManualEdit;
+    HBox hbBtnInsert, hbBtnConsultBTN,hbBtnAutomatic, hbBtnManualEdit, hbStudentNumberPropCodeManualInsert, hbMentorEmailManualInsert, hbStudentMentorInsertAttributionEdit, hbMentorEmailEdit, hbAttributionManualErase, hbMentorEmailConsultMentors;
     Button btnAutomatic1,btnConfirmManualInsert, btnClearManualInsert,btnConfirmManualEdit, btnClearManualEdit, btnEraseManual, btnPropAttributesMentor, btnPropAttributesNMentor, btnNOrientMentor;
     ListView lvConsultBtn;
-    Label lbManualErase, lbManual, lbConsultStudents, lbAutomatic, lbManualEdit;
-    ChoiceBox  cbNameEmailMentor, cbTitleCodeProposal,cbNameSIDCodePEmailTEdit, cbNameSIDCodePEmailTErase, cbtitleCodeMentor, cbNameEmailMentorEdit;
+    Label lbManualErase, lbManual, lbConsultStudents, lbAutomatic, lbManualEdit, lbStudentNumberPropCodeManualInsert, lbMentorEmailManualInsert, lbStudentMentorInsertAttributionEdit, lbMentorEmailEdit, lbAttributionManualErase, lbMentorEmailConsultMentors;
+    ChoiceBox  cbNameEmailMentor, cbTitleCodeProposal,cbNameSIDCodePEmailTEdit, cbNameSIDCodePEmailTErase, cbTitleCodeMentor, cbNameEmailMentorEdit;
 
     public PhaseFourStateUI(Facade facade) {
         this.facade = facade;
@@ -65,10 +62,19 @@ public class PhaseFourStateUI  extends BorderPane {
         btnPropAttributesMentor  = new Button("Students with Proposal with Mentor         ");
         btnPropAttributesNMentor = new Button("Students with Proposal with no Mentor       ");
         btnNOrientMentor = new Button("Number of Proposals a Teacher Mentors      ");
-        cbtitleCodeMentor =new ChoiceBox<>();
+        cbTitleCodeMentor =new ChoiceBox<>();
+
+        lbMentorEmailConsultMentors = new Label("Mentor\t");
+        lbMentorEmailConsultMentors.setAlignment(Pos.CENTER_LEFT);
+
+        hbMentorEmailConsultMentors = new HBox(lbMentorEmailConsultMentors, cbTitleCodeMentor);
+
+        hbMentorEmailConsultMentors.setAlignment(Pos.CENTER);
+        hbMentorEmailConsultMentors.setId(  "hBoxChoice");
+
         vbConsultBtnN = new VBox();
         vbConsultBtnN.setSpacing(7);
-        vbConsultBtnN.getChildren().addAll(btnNOrientMentor,cbtitleCodeMentor);
+        vbConsultBtnN.getChildren().addAll(btnNOrientMentor, hbMentorEmailConsultMentors);
 
         hbBtnConsultBTN.getChildren().addAll( btnPropAttributesMentor,btnPropAttributesNMentor,vbConsultBtnN);
         vbConsultBtn.getChildren().addAll(lbConsultStudents,lvConsultBtn, hbBtnConsultBTN);
@@ -91,9 +97,27 @@ public class PhaseFourStateUI  extends BorderPane {
         vbManualInsert.setSpacing(10);
 
         cbNameEmailMentor = new ChoiceBox<>();
+
+        lbMentorEmailManualInsert = new Label("Mentor\t");
+        lbMentorEmailManualInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbMentorEmailManualInsert = new HBox(lbMentorEmailManualInsert, cbNameEmailMentor);
+
+        hbMentorEmailManualInsert.setAlignment(Pos.CENTER);
+        hbMentorEmailManualInsert.setId(  "hBoxChoice");
+
+
         cbTitleCodeProposal = new ChoiceBox<>();
 
-        vbManualInsert.getChildren().addAll(lbManual, cbTitleCodeProposal,cbNameEmailMentor,hbBtnInsert);
+        lbStudentNumberPropCodeManualInsert = new Label("Student Proposal");
+        lbStudentNumberPropCodeManualInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberPropCodeManualInsert = new HBox(lbStudentNumberPropCodeManualInsert, cbTitleCodeProposal);
+
+        hbStudentNumberPropCodeManualInsert.setAlignment(Pos.CENTER);
+        hbStudentNumberPropCodeManualInsert.setId(  "hBoxChoice");
+
+        vbManualInsert.getChildren().addAll(lbManual, hbStudentNumberPropCodeManualInsert,hbMentorEmailManualInsert,hbBtnInsert);
 
         //Edit
         btnConfirmManualEdit = new Button("Edit");
@@ -111,9 +135,27 @@ public class PhaseFourStateUI  extends BorderPane {
         lbManualEdit.setMinWidth(500);
 
         cbNameSIDCodePEmailTEdit = new ChoiceBox<>();
+
+        lbStudentMentorInsertAttributionEdit = new Label("Student Proposal and Mentor");
+        lbStudentMentorInsertAttributionEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentMentorInsertAttributionEdit = new HBox(lbStudentMentorInsertAttributionEdit, cbNameSIDCodePEmailTEdit);
+
+        hbStudentMentorInsertAttributionEdit.setAlignment(Pos.CENTER);
+        hbStudentMentorInsertAttributionEdit.setId(  "hBoxChoice");
+
+
         cbNameEmailMentorEdit = new ChoiceBox<>();
 
-        vbManualEdit.getChildren().addAll(lbManualEdit,cbNameSIDCodePEmailTEdit, cbNameEmailMentorEdit, hbBtnManualEdit);
+        lbMentorEmailEdit = new Label("Mentor\t");
+        lbMentorEmailEdit.setAlignment(Pos.CENTER_LEFT);
+
+        hbMentorEmailEdit = new HBox(lbMentorEmailEdit, cbNameEmailMentorEdit);
+
+        hbMentorEmailEdit.setAlignment(Pos.CENTER);
+        hbMentorEmailEdit.setId(  "hBoxChoice");
+
+        vbManualEdit.getChildren().addAll(lbManualEdit,hbStudentMentorInsertAttributionEdit, hbMentorEmailEdit, hbBtnManualEdit);
 
         //ERASE
         lbManualErase = new Label("Choose the Student's Attribution that you want to erase");
@@ -124,8 +166,17 @@ public class PhaseFourStateUI  extends BorderPane {
         vbManualErase.setSpacing(5);
         vbManualErase.setAlignment(Pos.CENTER);
         cbNameSIDCodePEmailTErase = new ChoiceBox<>();
+
+        lbAttributionManualErase = new Label("Mentor Attribution\t");
+        lbAttributionManualErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbAttributionManualErase = new HBox(lbAttributionManualErase, cbNameSIDCodePEmailTErase);
+
+        hbAttributionManualErase.setAlignment(Pos.CENTER);
+        hbAttributionManualErase.setId(  "hBoxChoice");
+
         btnEraseManual = new Button("Erase");
-        vbManualErase.getChildren().addAll(lbManualErase, cbNameSIDCodePEmailTErase,btnEraseManual);
+        vbManualErase.getChildren().addAll(lbManualErase, hbAttributionManualErase,btnEraseManual);
 
         tabAutomatic = new Tab("Automatic Attribution", vbAutomatic);
         tabAutomatic.setClosable(false);
@@ -278,7 +329,7 @@ public class PhaseFourStateUI  extends BorderPane {
         btnNOrientMentor.setOnAction(actionEvent -> {
             lvConsultBtn.getItems().clear();
             StringBuilder sb = new StringBuilder();
-            if(cbtitleCodeMentor.getValue() == null){
+            if(cbTitleCodeMentor.getValue() == null){
                 for(String email : facade.getTeachers().keySet()){
                     sb.append("Teacher: "+ facade.getTeachers().get(email).toString()).append("\n");
                     sb.append("Min: "+ facade.mentorByTeacher(email).get(0)).append("\n");
@@ -290,7 +341,7 @@ public class PhaseFourStateUI  extends BorderPane {
 
             }else{
                 Label labelresponse = new Label();
-                labelresponse.setText("" + cbtitleCodeMentor.getValue());
+                labelresponse.setText("" + cbTitleCodeMentor.getValue());
 
                 String s = labelresponse.toString();
 
@@ -309,7 +360,7 @@ public class PhaseFourStateUI  extends BorderPane {
                 lvConsultBtn.getItems().add(sb.toString());
             }
 
-            cbtitleCodeMentor.setValue(null);
+            cbTitleCodeMentor.setValue(null);
         });
 
         btnEraseManual.setOnAction(actionEvent -> {
@@ -360,11 +411,11 @@ public class PhaseFourStateUI  extends BorderPane {
         }
 
         cbNameEmailMentor.getItems().clear();
-        cbtitleCodeMentor.getItems().clear();
+        cbTitleCodeMentor.getItems().clear();
         cbNameEmailMentorEdit.getItems().clear();
         for(Teacher t : facade.getTeachers().values()) {
             cbNameEmailMentor.getItems().add(t.getName()+","+t.getEmail());
-            cbtitleCodeMentor.getItems().add(t.getName()+","+t.getEmail());
+            cbTitleCodeMentor.getItems().add(t.getName()+","+t.getEmail());
             cbNameEmailMentorEdit.getItems().add(t.getName()+","+t.getEmail());
         }
 

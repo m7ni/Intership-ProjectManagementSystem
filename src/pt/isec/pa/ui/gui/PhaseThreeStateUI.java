@@ -21,12 +21,12 @@ public class PhaseThreeStateUI  extends BorderPane {
     Facade facade;
     Tab tabAutomatic, tabManualInsert, tabManualErase, tabConsultStudents, tabConsultFilters;
     VBox vbAutomatic, vbManualInsert, vbManualErase, vbConsultS, vbConsultFilters;
-    HBox hbBtnAutomatic,hbBtnInsert, hbBtnConsultS,hbBtnConsultC;
+    HBox hbBtnAutomatic,hbBtnInsert, hbBtnConsultS,hbBtnConsultC, hbStudentNumberManualInsert, hbProposalCodeManualInsert, hbStudentNumberManualErase;
     Button btnAutomatic1, btnAutomatic2,btnConfirmManualInsert, btnClearManualInsert, btnEraseManual, btnSelfPropAssociatedS, btnCandidatureRegiS, btnPropAttributedS,btnNoPropS;
     ListView lvConsultS,lvConsultP;
     Button btnShowProject;
     CheckBox chSelfProp,chTeachersProp, chPropAvailable, chPropNotAvailable;
-    Label lbManualErase, lbManual, lbConsultStudents, lbAutomatic, lbConsultC;
+    Label lbManualErase, lbManual, lbConsultStudents, lbAutomatic, lbConsultC, lbStudentNumberManualInsert, lbProposalCodeManualInsert, lbStudentNumberManualErase;
     ChoiceBox cbStudentNumberErase, cbNameNumberStudent, cbtitleCodeStudent;
     ArrayList<Filtros> fl;
 
@@ -118,9 +118,27 @@ public class PhaseThreeStateUI  extends BorderPane {
         vbManualInsert.setSpacing(10);
 
         cbNameNumberStudent = new ChoiceBox<>();
+
+        lbStudentNumberManualInsert = new Label("Student\t");
+        lbStudentNumberManualInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberManualInsert = new HBox(lbStudentNumberManualInsert, cbNameNumberStudent);
+
+        hbStudentNumberManualInsert.setAlignment(Pos.CENTER);
+        hbStudentNumberManualInsert.setId(  "hBoxChoice");
+
+
         cbtitleCodeStudent = new ChoiceBox<>();
 
-        vbManualInsert.getChildren().addAll(lbManual,cbNameNumberStudent,cbtitleCodeStudent,hbBtnInsert);
+        lbProposalCodeManualInsert = new Label("Proposal Code\t");
+        lbProposalCodeManualInsert.setAlignment(Pos.CENTER_LEFT);
+
+        hbProposalCodeManualInsert = new HBox(lbProposalCodeManualInsert, cbtitleCodeStudent);
+
+        hbProposalCodeManualInsert.setAlignment(Pos.CENTER);
+        hbProposalCodeManualInsert.setId(  "hBoxChoice");
+
+        vbManualInsert.getChildren().addAll(lbManual,hbStudentNumberManualInsert,hbProposalCodeManualInsert,hbBtnInsert);
 
         //ERASE
         lbManualErase = new Label("Choose the Student's Attribution that you want to erase");
@@ -131,9 +149,17 @@ public class PhaseThreeStateUI  extends BorderPane {
         vbManualErase.setSpacing(5);
         vbManualErase.setAlignment(Pos.CENTER);
         cbStudentNumberErase = new ChoiceBox<>();
-        btnEraseManual = new Button("Erase");
-        vbManualErase.getChildren().addAll(lbManualErase,cbStudentNumberErase,btnEraseManual);
 
+        lbStudentNumberManualErase = new Label("Proposal Attribution Code");
+        lbStudentNumberManualErase.setAlignment(Pos.CENTER_LEFT);
+
+        hbStudentNumberManualErase = new HBox(lbStudentNumberManualErase, cbStudentNumberErase);
+
+        hbStudentNumberManualErase.setAlignment(Pos.CENTER);
+        hbStudentNumberManualErase.setId(  "hBoxChoice");
+
+        btnEraseManual = new Button("Erase");
+        vbManualErase.getChildren().addAll(lbManualErase, hbStudentNumberManualErase,btnEraseManual);
 
         tabAutomatic = new Tab("Automatic Attribution", vbAutomatic);
         tabAutomatic.setClosable(false);

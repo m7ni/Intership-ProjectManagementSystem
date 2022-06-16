@@ -21,8 +21,8 @@ public class PhaseFiveStateUI  extends BorderPane {
     Facade facade;
     Tab tabStudents, tabProposals,tabMentors, tabGraphics;
     VBox vbConsultBtn,vbConsultBtnN,vbGraphics, vbspGraphics;
-    Label lbConsultStudents;
-    HBox hbBtnConsultBTN,hbBtnConsultS;
+    Label lbConsultStudents, lbTeacherEmailConsultMentors;
+    HBox hbBtnConsultBTN,hbBtnConsultS, hbTeacherEmailConsultMentors;
     ListView lvConsultBtn;
     Button btnPropAttributesMentor, btnPropAttributesNMentor,btnNOrientMentor;
     ChoiceBox cbtitleCodeMentor;
@@ -80,9 +80,18 @@ public class PhaseFiveStateUI  extends BorderPane {
         btnPropAttributesNMentor = new Button("Students with Proposal with no Mentor       ");
         btnNOrientMentor = new Button("Number of Proposals a Teacher Mentors      ");
         cbtitleCodeMentor =new ChoiceBox<>();
+
+        lbTeacherEmailConsultMentors = new Label("Mentor\t");
+        lbTeacherEmailConsultMentors.setAlignment(Pos.CENTER_LEFT);
+
+        hbTeacherEmailConsultMentors = new HBox(lbTeacherEmailConsultMentors, cbtitleCodeMentor);
+
+        hbTeacherEmailConsultMentors.setAlignment(Pos.CENTER);
+        hbTeacherEmailConsultMentors.setId(  "hBoxChoice");
+
         vbConsultBtnN = new VBox();
         vbConsultBtnN.setSpacing(7);
-        vbConsultBtnN.getChildren().addAll(btnNOrientMentor,cbtitleCodeMentor);
+        vbConsultBtnN.getChildren().addAll(btnNOrientMentor,hbTeacherEmailConsultMentors);
 
         hbBtnConsultBTN.getChildren().addAll( btnPropAttributesMentor,btnPropAttributesNMentor,vbConsultBtnN);
         vbConsultBtn.getChildren().addAll(lbConsultStudents,lvConsultBtn, hbBtnConsultBTN);
