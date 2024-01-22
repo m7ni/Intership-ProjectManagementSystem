@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the Advanced Programming Internship/Project Management System repository! This project, implemented in Java, serves as an internship and project management system with a robust backend. The graphical interface was created using JavaFX, and the main focus of the project was on understanding and implementing various design patterns such as Factory, Facade, Memento, Singleton, and Finite State Machine (FSM). The project achieved a score of 85/100.
+Welcome to the Advanced Programming Internship/Project Management System repository! This project, implemented in Java, serves as an internship and project management system. The graphical interface was created using JavaFX, and the main focus of the project was on understanding and implementing various design patterns such as Factory, Facade, Memento, Singleton, and Finite State Machine (FSM). The project achieved a score of 85/100.
 
 ## Project Highlights
 
