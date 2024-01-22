@@ -1,4 +1,4 @@
-# Advanced Programming Internship/Project Management System Readme
+# Internship/Project Management System 
 
 ## Overview
 
